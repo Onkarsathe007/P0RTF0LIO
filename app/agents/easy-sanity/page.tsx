@@ -2,6 +2,9 @@ import type { ReactNode } from 'react'
 import { styles } from '../../styles'
 import DocsSidebar from './docs-sidebar'
 
+type ToolListItem = { name: string; description: string; details?: string[] }
+type ToolTuple = [string, string]
+
 const navGroups = [
   {
     title: 'Getting Started',
@@ -60,7 +63,7 @@ const capabilityAreas = [
   'Persistent repo understanding and testing memory',
 ]
 
-const architectureModules = [
+const architectureModules: ToolTuple[] = [
   ['main.py', 'Thin MCP entrypoint. Registers task tools, browser tools, and memory tools.'],
   ['browser/', 'Browser session state, browser tools, semantic domain understanding, and report generation.'],
   ['tasks/', 'Saved task system, structured tasks, sample tasks, task rendering, task linting, and profile management.'],
@@ -71,7 +74,7 @@ const architectureModules = [
   ['artifacts/', 'Generated screenshots, downloads, and markdown reports.'],
 ]
 
-const envRows = [
+const envRows: [string, string, string][] = [
   ['BROWSER_HEADLESS_DEFAULT', 'Whether `browser_start` runs headless by default', 'false'],
   ['BROWSER_DEFAULT_TIMEOUT_MS', 'Default Playwright timeout in milliseconds', '30000'],
   ['BROWSER_REPORTS_DIR', 'Directory for markdown test reports', 'artifacts/reports'],
@@ -159,7 +162,7 @@ const inspectionTools = [
   },
 ]
 
-const interactionTools = [
+const interactionTools: ToolTuple[] = [
   ['browser_navigate(url)', 'Navigates to a URL and waits for page load/network idle behavior.'],
   ['browser_find_element(description, limit=5)', 'Finds likely interactive elements using a natural-language description. Useful prompts include `email field`, `login button`, and `search input`.'],
   ['browser_click(selector=None, text=None, element_index=None)', 'Low-level click tool supporting CSS selector click, visible text click, and `browser_get_state()` element index click.'],
@@ -183,7 +186,7 @@ const interactionTools = [
   ['browser_wait(seconds=2)', 'Simple fixed wait helper. Useful for animation and unstable UI, though smarter wait tools are preferred when possible.'],
 ]
 
-const waitTools = [
+const waitTools: ToolTuple[] = [
   ['browser_wait_for_text(text, timeout_ms=10000)', 'Waits until visible text appears.'],
   ['browser_wait_for_element(selector, timeout_ms=10000, state="visible")', 'Waits for an element to reach a given state such as `visible`, `attached`, `hidden`, or `detached`.'],
   ['browser_wait_for_url(pattern, timeout_ms=10000)', 'Waits until the current URL matches a substring pattern.'],
@@ -192,7 +195,7 @@ const waitTools = [
   ['browser_wait_for_disappearance(selector, timeout_ms=10000)', 'Waits until an element disappears or becomes hidden.'],
 ]
 
-const extractionTools = [
+const extractionTools: ToolTuple[] = [
   ['browser_extract(selector)', 'Extracts text from a specific element.'],
   ['browser_extract_table(selector)', 'Extracts table headers and row data.'],
   ['browser_extract_list(selector)', 'Extracts items from a list-like container.'],
@@ -202,7 +205,7 @@ const extractionTools = [
   ['browser_compare_text(selector, expected)', 'Compares an element’s text to an expected value and returns pass/fail data.'],
 ]
 
-const assertionTools = [
+const assertionTools: ToolTuple[] = [
   ['assert_url_contains(expected_text)', 'Asserts the current URL contains a substring.'],
   ['assert_url_equals(expected_url)', 'Asserts the current URL exactly matches a value.'],
   ['assert_page_title(expected_text)', 'Asserts the page title contains the expected text.'],
@@ -221,7 +224,7 @@ const assertionTools = [
   ['assert_screenshot_stable(selector="body")', 'Takes two short-interval screenshots and asserts they are identical. Useful for checking visual stability and detecting still-changing UI.'],
 ]
 
-const taskTools = [
+const taskTools: ToolTuple[] = [
   ['task_create(name, prompt, description="")', 'Creates a reusable saved task and registers it as a slash-command-style prompt.'],
   ['task_create_structured(...)', 'Creates a structured task definition with fields such as purpose, steps, assertions, inputs, retry policy, and expected result.'],
   ['task_preview_structured(...)', 'Previews a structured task without saving it.'],
@@ -235,14 +238,14 @@ const taskTools = [
   ['sample_tasks_import(names_json="[]", overwrite=False)', 'Imports bundled sample tasks into saved tasks.'],
 ]
 
-const profileTools = [
+const profileTools: ToolTuple[] = [
   ['profile_save(name, variables_json, description="")', 'Creates or updates a reusable variable profile.'],
   ['profile_list()', 'Lists all profiles.'],
   ['profile_get(name, mask_secrets=True)', 'Returns a profile, optionally masking secrets.'],
   ['profile_delete(name)', 'Deletes a profile.'],
 ]
 
-const memoryTools = [
+const memoryTools: ToolTuple[] = [
   ['app_memory_sync(repo_path, app_name="", focus="", max_files=250)', 'Scans a target repository and builds or updates a persistent understanding map.'],
   ['app_memory_get(repo_path)', 'Returns stored memory for a repo.'],
   ['app_memory_add_note(repo_path, note, category="workflow")', 'Adds a manual persistent note to the memory map.'],
@@ -357,7 +360,7 @@ function ToolList({
   tools,
   columns = 1,
 }: {
-  tools: Array<{ name: string; description: string; details?: string[] }> | Array<[string, string]>
+  tools: ToolListItem[] | ToolTuple[]
   columns?: number
 }) {
   const normalized = tools.map((tool) =>
