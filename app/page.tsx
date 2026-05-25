@@ -70,6 +70,10 @@ const highlights = [
       </>
     ),
   },
+  {
+    label: 'Philosophy',
+    content: 'Aura FARM',
+  },
 ]
 
 export default function Home() {
