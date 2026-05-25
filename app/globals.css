@@ -12,6 +12,7 @@
   --subtle: #71717a;
   --line: #e4e4e7;
   --link: #09090b;
+  --surface-elevated: #fafafa;
 }
 
 [data-theme='dark'] {
@@ -22,6 +23,7 @@
   --subtle: #71717a;
   --line: #27272a;
   --link: #f4f4f5;
+  --surface-elevated: #111113;
 }
 
 html,
@@ -129,6 +131,7 @@ body {
 .home-nav-links {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 1.25rem;
 }
 
@@ -429,6 +432,107 @@ body {
   max-width: 65ch;
 }
 
+.writeup-link {
+  color: inherit;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.writeup-link:hover {
+  opacity: 0.7;
+}
+
+.writeup-detail {
+  max-width: 70ch;
+}
+
+.markdown-flow {
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+}
+
+.markdown-h1,
+.markdown-h2,
+.markdown-h3 {
+  color: var(--text);
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+}
+
+.markdown-h1 {
+  font-size: 2rem;
+}
+
+.markdown-h2 {
+  font-size: 1.45rem;
+  margin-top: 1rem;
+}
+
+.markdown-h3 {
+  font-size: 1.15rem;
+  margin-top: 0.75rem;
+}
+
+.markdown-paragraph {
+  color: var(--muted);
+  font-size: 1.05rem;
+  line-height: 1.8;
+}
+
+.markdown-list,
+.markdown-ordered-list {
+  padding-left: 1.5rem;
+  color: var(--muted);
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  line-height: 1.8;
+}
+
+.markdown-paragraph code,
+.markdown-list code,
+.markdown-ordered-list code {
+  font-size: 0.95em;
+  background-color: var(--surface-elevated);
+  padding: 0.1rem 0.35rem;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  color: var(--text);
+}
+
+.markdown-code-block,
+.mermaid-shell {
+  background-color: var(--surface-elevated);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+}
+
+.markdown-code-block {
+  overflow-x: auto;
+  padding: 1rem 1.1rem;
+  color: var(--text);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.mermaid-shell {
+  padding: 1rem;
+  overflow-x: auto;
+}
+
+.mermaid-shell svg {
+  display: block;
+  min-width: 620px;
+  max-width: 100%;
+  height: auto;
+}
+
+.mermaid-loading {
+  color: var(--subtle);
+  font-size: 0.85rem;
+}
+
 button,
 a {
   -webkit-tap-highlight-color: transparent;
@@ -516,6 +620,25 @@ a {
   .home-title,
   .docs-title {
     font-size: 2.2rem;
+  }
+
+  .writeup-content,
+  .markdown-paragraph,
+  .markdown-list,
+  .markdown-ordered-list {
+    font-size: 1rem;
+  }
+
+  .markdown-h1 {
+    font-size: 1.7rem;
+  }
+
+  .markdown-h2 {
+    font-size: 1.3rem;
+  }
+
+  .mermaid-shell svg {
+    min-width: 540px;
   }
 
   .home-lead,

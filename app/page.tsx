@@ -92,6 +92,9 @@ export default function Home() {
               <Link href="/writeups" className="home-nav-link">
                 writeups
               </Link>
+              <Link href="/shitposts" className="home-nav-link">
+                shitposts
+              </Link>
             </div>
             <ThemeToggle />
           </header>
