@@ -6,7 +6,7 @@ excerpt: Graphify gives SWAP semantic priority, graph-grounded arbitration, and 
 
 # Graphify × SWAP Integration
 
-## The Core Insight
+## The Insight
 
 SWAP knows **who is touching what and when**.
 Graphify knows **what things mean and why they exist**.
@@ -136,7 +136,7 @@ Euclidean: volume grows as r²  (2D) or r³  (3D)
 Hyperbolic: volume grows as e^r           <- matches tree branching
 ```
 
-### The concrete feature for SWAP
+### The concrete feature 
 
 Graphify embeds every symbol as a point in the Poincare ball. Distance in this space captures *both* structural, call-graph, and semantic, doc-derived, similarity simultaneously.
 
@@ -199,16 +199,6 @@ Agent A wants to claim createOrder()
   |
   '- Winner takes claim with graph-grounded justification logged to multi-agent-memo
 ```
-
-## Build Order
-
-| Priority | Layer | Why first |
-|---|---|---|
-| 1 | Graphify query adapter | The interface between SWAP's MCP server and Graphify's graph API - everything else depends on this |
-| 2 | Layer 1: semantic symbol importance | Highest leverage change - one function, immediately smarter negotiation |
-| 3 | Layer 3: `query_symbol_context` MCP tool | Prevents conflicts before they happen - biggest UX improvement |
-| 4 | Poincare ball semantic coherence | The headline feature - technically novel, gets a founder's attention |
-| 5 | Layer 2: graph-grounded justification | Completes the picture, makes everything auditable |
 
 ## Why This Is a Genuine Technical Contribution
 
