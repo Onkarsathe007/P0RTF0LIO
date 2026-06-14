@@ -17,10 +17,10 @@ function getContentType(filePath: string) {
 
 export async function GET(
   _request: Request,
-  context: { params: { path: string[] } }
+  context: { params: Promise<{ path: string[] }> }
 ) {
   try {
-    const { path: filePathParts } = context.params
+    const { path: filePathParts } = (await context.params)
     const requestedPath = filePathParts.join('/')
     const fullPath = path.join(WRITEUPS_DIR, requestedPath)
     const normalized = path.normalize(fullPath)
