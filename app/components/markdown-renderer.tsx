@@ -24,9 +24,30 @@ function renderInline(text: string) {
 type Block =
   | { type: 'heading'; level: 1 | 2 | 3; text: string }
   | { type: 'paragraph'; text: string }
+  | { type: 'image'; src: string; alt: string }
   | { type: 'unordered-list'; items: string[] }
   | { type: 'ordered-list'; items: string[] }
   | { type: 'code'; language: string; content: string }
+
+function decodeURIComponentSafe(value: string) {
+  try {
+    return decodeURIComponent(value)
+  } catch {
+    return value
+  }
+}
+
+function toAssetSrc(rawPath: string) {
+  const cleaned = rawPath.trim().replace(/^\.\//, '')
+  const normalizedPath = cleaned.includes('/') ? cleaned : `img/${cleaned}`
+
+  const encodedPath = normalizedPath
+    .split('/')
+    .map((segment) => encodeURIComponent(decodeURIComponentSafe(segment)))
+    .join('/')
+
+  return `/writeups-assets/${encodedPath}`
+}
 
 function parseBlocks(markdown: string): Block[] {
   const lines = markdown.split('\n')
@@ -36,14 +57,15 @@ function parseBlocks(markdown: string): Block[] {
 
   while (index < lines.length) {
     const line = lines[index]
+    const trimmedLine = line.trim()
 
-    if (!line.trim()) {
+    if (!trimmedLine) {
       index += 1
       continue
     }
 
-    if (line.startsWith('```')) {
-      const language = line.slice(3).trim()
+    if (trimmedLine.startsWith('```')) {
+      const language = trimmedLine.slice(3).trim()
       const content: string[] = []
       index += 1
 
@@ -62,7 +84,7 @@ function parseBlocks(markdown: string): Block[] {
       continue
     }
 
-    const headingMatch = line.match(/^(#{1,3})\s+(.*)$/)
+    const headingMatch = trimmedLine.match(/^(#{1,3})\s+(.*)$/)
     if (headingMatch) {
       blocks.push({
         type: 'heading',
@@ -73,11 +95,35 @@ function parseBlocks(markdown: string): Block[] {
       continue
     }
 
-    if (line.startsWith('- ')) {
+    const obsidianImageMatch = trimmedLine.match(/^!\[\[(.+?)\]\]$/)
+    if (obsidianImageMatch) {
+      const [rawPath, rawAlt] = obsidianImageMatch[1].split('|')
+      blocks.push({
+        type: 'image',
+        src: toAssetSrc(rawPath),
+        alt: (rawAlt ?? rawPath).trim(),
+      })
+      index += 1
+      continue
+    }
+
+    const markdownImageMatch = trimmedLine.match(/^!\[(.*?)\]\((.+?)\)$/)
+    if (markdownImageMatch) {
+      const [, altText, rawPath] = markdownImageMatch
+      blocks.push({
+        type: 'image',
+        src: toAssetSrc(rawPath),
+        alt: altText || rawPath,
+      })
+      index += 1
+      continue
+    }
+
+    if (trimmedLine.startsWith('- ')) {
       const items: string[] = []
 
-      while (index < lines.length && lines[index].startsWith('- ')) {
-        items.push(lines[index].slice(2).trim())
+      while (index < lines.length && lines[index].trim().startsWith('- ')) {
+        items.push(lines[index].trim().slice(2).trim())
         index += 1
       }
 
@@ -85,11 +131,11 @@ function parseBlocks(markdown: string): Block[] {
       continue
     }
 
-    if (/^\d+\.\s/.test(line)) {
+    if (/^\d+\.\s/.test(trimmedLine)) {
       const items: string[] = []
 
-      while (index < lines.length && /^\d+\.\s/.test(lines[index])) {
-        items.push(lines[index].replace(/^\d+\.\s/, '').trim())
+      while (index < lines.length && /^\d+\.\s/.test(lines[index].trim())) {
+        items.push(lines[index].trim().replace(/^\d+\.\s/, '').trim())
         index += 1
       }
 
@@ -102,10 +148,12 @@ function parseBlocks(markdown: string): Block[] {
     while (
       index < lines.length &&
       lines[index].trim() &&
-      !lines[index].startsWith('```') &&
-      !lines[index].startsWith('- ') &&
-      !/^\d+\.\s/.test(lines[index]) &&
-      !/^(#{1,3})\s+/.test(lines[index])
+      !lines[index].trim().startsWith('```') &&
+      !lines[index].trim().startsWith('- ') &&
+      !/^\d+\.\s/.test(lines[index].trim()) &&
+      !/^(#{1,3})\s+/.test(lines[index].trim()) &&
+      !/^!\[\[(.+?)\]\]$/.test(lines[index].trim()) &&
+      !/^!\[(.*?)\]\((.+?)\)$/.test(lines[index].trim())
     ) {
       paragraph.push(lines[index].trim())
       index += 1
@@ -163,6 +211,10 @@ export function MarkdownRenderer({
               {renderInline(block.text)}
             </p>
           )
+        }
+
+        if (block.type === 'image') {
+          return <img key={index} className="markdown-image" src={block.src} alt={block.alt} loading="lazy" />
         }
 
         if (block.type === 'unordered-list') {

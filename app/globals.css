@@ -516,6 +516,16 @@ body {
   line-height: 1.6;
 }
 
+.markdown-image {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  margin: 1rem 0;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+}
+
 .mermaid-shell {
   padding: 1rem;
   overflow-x: auto;

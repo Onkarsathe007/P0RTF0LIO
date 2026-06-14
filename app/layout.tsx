@@ -10,35 +10,22 @@ const victorMono = Victor_Mono({
 })
 
 export const metadata: Metadata = {
-  title: 'Kedar Vartak',
-  description: 'I am a 21yo Founder and Engineer',
-  keywords: ['Kedar Vartak', 'entrepreneur', 'founder', 'engineer', 'developer', 'startup'],
-  authors: [{ name: 'Kedar Vartak' }],
-  creator: 'Kedar Vartak',
+  title: 'Onkar Sathe',
+  description: 'Full Stack Developer building practical software systems and digital experiences.',
+  keywords: ['Onkar Sathe', 'full stack developer', 'software engineer', 'projects', 'blogs'],
+  authors: [{ name: 'Onkar Sathe' }],
+  creator: 'Onkar Sathe',
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://kedarvartak.com',
-    siteName: 'Kedar Vartak',
-    title: 'Kedar Vartak',
-    description: 'I am a 21yo Founder and Engineer',
+    siteName: 'Onkar Sathe',
+    title: 'Onkar Sathe',
+    description: 'Full Stack Developer building practical software systems and digital experiences.',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Kedar Vartak',
-    description: 'I am a 21yo Founder and Engineer',
-    creator: '@kedarvartak',
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
-    },
+    title: 'Onkar Sathe',
+    description: 'Full Stack Developer building practical software systems and digital experiences.',
   },
 }
 

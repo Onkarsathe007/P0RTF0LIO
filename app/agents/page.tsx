@@ -1,12 +1,39 @@
 import Link from 'next/link'
 import { ThemeToggle } from '../components/theme-toggle'
 
+const projects = [
+  {
+    name: 'Fastshop',
+    type: 'Full Stack Project',
+    description:
+      'An e-commerce oriented project focused on end-to-end product flows, clean UX, and practical implementation.',
+    points: ['Product-style architecture', 'Backend + frontend flow ownership', 'Hands-on full-stack execution'],
+    link: 'https://github.com/Onkarsathe007/Fastshop',
+  },
+  {
+    name: '.dotfiles',
+    type: 'Developer Experience',
+    description:
+      'My personal environment setup to keep development fast, reproducible, and consistent across machines.',
+    points: ['Productivity-first setup', 'Reusable terminal/editor defaults', 'Workflow consistency'],
+    link: 'https://github.com/Onkarsathe007/dotfiles',
+  },
+  {
+    name: 'CommuniAI',
+    type: 'AI Project',
+    description:
+      'An AI-focused project exploring communication workflows, automation, and practical assistant-driven tooling.',
+    points: ['AI-first product thinking', 'Applied experimentation', 'Practical automation mindset'],
+    link: 'https://github.com/Onkarsathe007/CommuniAI',
+  },
+]
+
 export const metadata = {
-  title: "Kedar's Agents - Kedar Vartak",
-  description: 'A closer look at AI agents and applied systems built by Kedar Vartak.',
+  title: 'Projects - Onkar Sathe',
+  description: 'A collection of software projects built by Onkar Sathe.',
 }
 
-export default function AgentsPage() {
+export default function ProjectsPage() {
   return (
     <main className="split-shell">
       <div className="split-container">
@@ -17,120 +44,62 @@ export default function AgentsPage() {
                 start
               </Link>
               <Link href="/agents" className="home-nav-link home-nav-link-active">
-                agents
+                projects
               </Link>
               <Link href="/writeups" className="home-nav-link">
-                writeups
+                blogs
+              </Link>
+              <Link href="/shitposts" className="home-nav-link">
+                notes
               </Link>
             </div>
             <ThemeToggle />
           </header>
 
           <div className="home-intro-sidebar">
-            <img src="/img.jpeg" alt="Kedar Vartak" className="home-profile-img" />
-            <h1 className="home-title">Kedar&apos;s Agents</h1>
-            <p className="home-lead">
-              Systems, tooling, and experiments built for real software teams and messy production workflows.
-            </p>
-          </div>
+            <img
+              src="https://res.cloudinary.com/dn6xis9je/image/upload/v1780646159/onkar_v40zai.jpg"
+              alt="Onkar Sathe"
+              className="home-profile-img"
+            />
+            <h1 className="home-title">Projects</h1>
+            <p className="home-lead">I build things, break them, and watch them come alive - this process is what I love..</p>
 
-          <div className="home-intro">
-            <p className="home-paragraph">
-              This page is where I collect the agents I&apos;ve built. I care less about flashy demos and more about systems that reduce toil, catch regressions, and help engineers move faster with confidence.
-            </p>
-            <p className="home-paragraph">
-              The current lineup starts with <strong>Easy Sanity</strong>, our regression testing agent designed to sanity-check product flows before humans have to chase the same bugs twice.
-            </p>
           </div>
         </aside>
 
         <section className="split-main">
           <div className="home-section">
-            <h2 className="home-section-title">Featured agent</h2>
-            
+            <h2 className="home-section-title">Project Collection</h2>
             <div className="agents-grid">
-              <article className="agent-card">
-                <div className="agent-card-top">
-                  <span className="agent-pill">Regression Testing Agent</span>
-                </div>
+              {projects.map((project) => (
+                <article key={project.name} className="agent-card">
+                  <div className="agent-card-top">
+                    <span className="agent-pill">{project.type}</span>
+                  </div>
 
-                <div>
-                  <h3 className="agent-title">Easy Sanity</h3>
-                  <p className="agent-description">
-                    A calm, persistent QA partner that patrols critical product flows, reruns key journeys, and flags regressions before they turn into team-wide distractions.
-                  </p>
-                </div>
+                  <div>
+                    <h3 className="agent-title">{project.name}</h3>
+                    <p className="agent-description">{project.description}</p>
+                  </div>
 
-                <div className="agent-meta-row">
-                  <span className="agent-meta-item">Catches regressions early</span>
-                  <span className="agent-meta-item">Repeatable sanity checks</span>
-                  <span className="agent-meta-item">Faster release confidence</span>
-                </div>
+                  <div className="agent-meta-row">
+                    {project.points.map((point) => (
+                      <span key={point} className="agent-meta-item">
+                        {point}
+                      </span>
+                    ))}
+                  </div>
 
-                <div>
-                  <Link href="/agents/easy-sanity" className="inline-link">
-                    Read documentation →
-                  </Link>
-                </div>
-              </article>
-
-              <article className="agent-card">
-                <div className="agent-card-top">
-                  <span className="agent-pill">Shared Memory MCP Server</span>
-                </div>
-
-                <div>
-                  <h3 className="agent-title">Multi Agent Memo</h3>
-                  <p className="agent-description">
-                    A shared context layer for Claude Code, Codex, and Gemini CLI. It maintains a single source of truth in your repo to eliminate "cold starts" and keep multiple agents in sync automatically.
-                  </p>
-                </div>
-
-                <div className="agent-meta-row">
-                  <span className="agent-meta-item">No more cold starts</span>
-                  <span className="agent-meta-item">Append-only AGENTS.md</span>
-                  <span className="agent-meta-item">Multi-CLI compatibility</span>
-                </div>
-
-                <div>
-                  <a href="https://github.com/kedarvartak/multi-agent-memo" target="_blank" rel="noopener noreferrer" className="inline-link">
-                    View on GitHub →
-                  </a>
-                </div>
-              </article>
-
-              <article className="agent-card">
-                <div className="agent-card-top">
-                  <span className="agent-pill">Browser-First MCP Server</span>
-                </div>
-
-                <div>
-                  <h3 className="agent-title">Agent Vision</h3>
-                  <p className="agent-description">
-                    Gives agents direct visual access to live Chrome or Brave tabs through the Chrome DevTools Protocol. It lets agents capture screenshots and pull structured page metadata on demand.
-                  </p>
-                </div>
-
-                <div className="agent-meta-row">
-                  <span className="agent-meta-item">Chrome DevTools Protocol</span>
-                  <span className="agent-meta-item">Real-time Visual Context</span>
-                  <span className="agent-meta-item">Structured Page Data</span>
-                </div>
-
-                <div>
-                  <a href="https://github.com/kedarvartak/agent-vision" target="_blank" rel="noopener noreferrer" className="inline-link">
-                    View on GitHub →
-                  </a>
-                </div>
-              </article>
+                  <div>
+                    <a href={project.link} target="_blank" rel="noopener noreferrer" className="inline-link">
+                      View on GitHub →
+                    </a>
+                  </div>
+                </article>
+              ))}
             </div>
           </div>
-
-          <footer className="home-footer">
-            <div className="home-footer-links">
-              {/* Footer links removed as requested */}
-            </div>
-          </footer>
         </section>
       </div>
     </main>

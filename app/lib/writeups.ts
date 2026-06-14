@@ -13,6 +13,8 @@ export type Writeup = WriteupMeta & {
 }
 
 const WRITEUPS_DIR = path.join(process.cwd(), 'writeups')
+const HASHNODE_ENDPOINT = 'https://gql.hashnode.com/'
+const DEFAULT_HASHNODE_PUBLICATION_HOST = 'blog.onkarsathe.co.in'
 
 function parseFrontmatter(source: string) {
   const match = source.match(/^---\n([\s\S]*?)\n---\n?([\s\S]*)$/)
@@ -47,7 +49,7 @@ function parseFrontmatter(source: string) {
 }
 
 function formatDisplayDate(value: string) {
-  const date = new Date(`${value}T00:00:00`)
+  const date = new Date(value.includes('T') ? value : `${value}T00:00:00`)
 
   if (Number.isNaN(date.getTime())) {
     return value
@@ -60,7 +62,7 @@ function formatDisplayDate(value: string) {
   }).format(date)
 }
 
-export async function getWriteups() {
+async function getLocalWriteups() {
   const files = await readdir(WRITEUPS_DIR)
   const markdownFiles = files.filter((file) => file.endsWith('.md'))
 
@@ -85,7 +87,7 @@ export async function getWriteups() {
     .map(({ sortDate, ...writeup }) => writeup)
 }
 
-export async function getWriteupBySlug(slug: string): Promise<Writeup | null> {
+async function getLocalWriteupBySlug(slug: string): Promise<Writeup | null> {
   try {
     const source = await readFile(path.join(WRITEUPS_DIR, `${slug}.md`), 'utf8')
     const { frontmatter, content } = parseFrontmatter(source)
@@ -100,4 +102,177 @@ export async function getWriteupBySlug(slug: string): Promise<Writeup | null> {
   } catch {
     return null
   }
+}
+
+type HashnodePostNode = {
+  title: string
+  brief: string
+  slug: string
+  publishedAt: string
+  content?: {
+    markdown?: string
+  } | null
+}
+
+async function fetchHashnode<T>(query: string, variables: Record<string, unknown>): Promise<T | null> {
+  try {
+    const response = await fetch(HASHNODE_ENDPOINT, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ query, variables }),
+      next: { revalidate: 900 },
+    })
+
+    if (!response.ok) {
+      return null
+    }
+
+    const payload = await response.json()
+
+    if (payload.errors?.length) {
+      return null
+    }
+
+    return payload.data as T
+  } catch {
+    return null
+  }
+}
+
+type HashnodePostsPage = {
+  publication?: {
+    posts?: {
+      edges?: Array<{ node: HashnodePostNode }>
+      pageInfo?: {
+        hasNextPage?: boolean
+        endCursor?: string | null
+      }
+    }
+  }
+}
+
+async function getHashnodeWriteups(publicationHost: string): Promise<WriteupMeta[] | null> {
+  const query = `
+    query PublicationPosts($host: String!, $first: Int!, $after: String) {
+      publication(host: $host) {
+        posts(first: $first, after: $after) {
+          edges {
+            node {
+              title
+              brief
+              slug
+              publishedAt
+            }
+          }
+          pageInfo {
+            hasNextPage
+            endCursor
+          }
+        }
+      }
+    }
+  `
+
+  const posts: HashnodePostNode[] = []
+  let after: string | null = null
+  let hasNextPage = true
+
+  while (hasNextPage) {
+    const data: HashnodePostsPage | null = await fetchHashnode<HashnodePostsPage>(query, {
+      host: publicationHost,
+      first: 100,
+      after,
+    })
+
+    const pagePosts = data?.publication?.posts?.edges?.map((edge: { node: HashnodePostNode }) => edge.node) ?? []
+    posts.push(...pagePosts)
+
+    const pageInfo: {
+      hasNextPage?: boolean
+      endCursor?: string | null
+    } | undefined = data?.publication?.posts?.pageInfo
+    hasNextPage = Boolean(pageInfo?.hasNextPage)
+    after = pageInfo?.endCursor ?? null
+
+    if (!pagePosts.length) {
+      break
+    }
+  }
+
+  if (!posts.length) {
+    return null
+  }
+
+  return posts
+    .map((post) => ({
+      slug: post.slug,
+      title: post.title,
+      date: formatDisplayDate(post.publishedAt),
+      excerpt: post.brief ?? '',
+      sortDate: post.publishedAt,
+    }))
+    .sort((a, b) => b.sortDate.localeCompare(a.sortDate))
+    .map(({ sortDate, ...writeup }) => writeup)
+}
+
+async function getHashnodeWriteupBySlug(publicationHost: string, slug: string): Promise<Writeup | null> {
+  const query = `
+    query PublicationPostBySlug($host: String!, $slug: String!) {
+      publication(host: $host) {
+        post(slug: $slug) {
+          title
+          brief
+          slug
+          publishedAt
+          content {
+            markdown
+          }
+        }
+      }
+    }
+  `
+
+  const data = await fetchHashnode<{
+    publication?: {
+      post?: HashnodePostNode | null
+    }
+  }>(query, { host: publicationHost, slug })
+
+  const post = data?.publication?.post
+
+  if (!post) {
+    return null
+  }
+
+  return {
+    slug: post.slug,
+    title: post.title,
+    date: formatDisplayDate(post.publishedAt),
+    excerpt: post.brief ?? '',
+    content: post.content?.markdown?.trim() || post.brief || '',
+  }
+}
+
+function getPublicationHost() {
+  return process.env.HASHNODE_PUBLICATION_HOST ?? DEFAULT_HASHNODE_PUBLICATION_HOST
+}
+
+export async function getWriteups() {
+  const hashnodeWriteups = await getHashnodeWriteups(getPublicationHost())
+  if (hashnodeWriteups) {
+    return hashnodeWriteups
+  }
+
+  return getLocalWriteups()
+}
+
+export async function getWriteupBySlug(slug: string): Promise<Writeup | null> {
+  const hashnodeWriteup = await getHashnodeWriteupBySlug(getPublicationHost(), slug)
+  if (hashnodeWriteup) {
+    return hashnodeWriteup
+  }
+
+  return getLocalWriteupBySlug(slug)
 }

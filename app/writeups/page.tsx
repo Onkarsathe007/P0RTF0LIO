@@ -3,8 +3,8 @@ import { ThemeToggle } from '../components/theme-toggle'
 import { getWriteups } from '../lib/writeups'
 
 export const metadata = {
-  title: "Writeups - Kedar Vartak",
-  description: 'Long-form writing on agent memory, systems, and how software should behave under pressure.',
+  title: 'Blogs - Onkar Sathe',
+  description: 'Articles on software engineering, learning, and building practical products.',
 }
 
 export default async function WriteupsPage() {
@@ -20,23 +20,21 @@ export default async function WriteupsPage() {
                 start
               </Link>
               <Link href="/agents" className="home-nav-link">
-                agents
+                projects
               </Link>
               <Link href="/writeups" className="home-nav-link home-nav-link-active">
-                writeups
+                blogs
               </Link>
               <Link href="/shitposts" className="home-nav-link">
-                shitposts
+                notes
               </Link>
             </div>
             <ThemeToggle />
           </header>
 
           <div className="home-intro-sidebar">
-            <h1 className="home-title">Writeups</h1>
-            <p className="home-lead">
-              Long-form posts on agent memory, systems design, and the software patterns worth caring about.
-            </p>
+            <h1 className="home-title">Blogs</h1>
+            <p className="home-lead">Notes on engineering, systems thinking, and lessons from building in public.</p>
           </div>
         </aside>
 

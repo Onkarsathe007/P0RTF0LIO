@@ -1,78 +1,37 @@
 import Link from 'next/link'
 import { ThemeToggle } from './components/theme-toggle'
-import { HoverChip } from './components/hover-chip'
 
 const highlights = [
   {
-    label: 'Current',
-    content: (
-      <>
-        Software Engineer at{' '}
-        <a href="https://www.loopr.ai" target="_blank" rel="noopener noreferrer" className="inline-link">
-          Loopr.ai
-        </a>
-      </>
-    ),
+    label: 'Role',
+    content: 'Backend / Devops',
+  },
+  {
+    label: 'Education',
+    content: 'B-Tech in  AI and Data Science · VIIT Pune',
+  },
+  {
+    label: 'Experience',
+    content: '3.2+ years across freelancing and personal projects ',
   },
   {
     label: 'Focus',
-    content: 'AI systems that make my everyday work easier and faster.',
+    content: 'Build technology that solves real problems for real people.',
+  },
+]
+
+const skills = ['Typescript', 'Java', 'Go', 'AWS', 'Docker', 'Kubernetes', 'Redis', 'Git', 'and etc etc']
+
+const projects = [
+  {
+    name: '.dotfiles',
+    description: 'Personalized Arch Linux (Hyprland) rice, built from scratch.',
+    link: 'https://github.com/Onkarsathe007/dotfiles',
   },
   {
-    label: 'Build',
-    content: (
-      <>
-        <HoverChip text="re-usable qa testing agent for browser-based apps">
-          <a
-            href="https://github.com/kedarvartak/easy-sanity"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-link"
-          >
-            Easy Sanity
-          </a>
-        </HoverChip>
-        ,{' '}
-        <HoverChip text="connect your ide to browser via cdp — eyes for your llms">
-          <a
-            href="https://github.com/kedarvartak/agent-vision"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-link"
-          >
-            Agent Vision
-          </a>
-        </HoverChip>
-        ,{' '}
-        <HoverChip text="shared repo-memory to sync context across all your coding agents">
-          <a
-            href="https://github.com/kedarvartak/multi-agent-memo"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-link"
-          >
-            Multi Agent Memo
-          </a>
-        </HoverChip>
-        .
-      </>
-    ),
-  },
-  {
-    label: 'Background',
-    content: (
-      <>
-        AI Engineering,{' '}
-        <a href="https://www.vit.edu/" target="_blank" rel="noopener noreferrer" className="inline-link">
-          VIT Pune
-        </a>
-        .
-      </>
-    ),
-  },
-  {
-    label: 'Philosophy',
-    content: 'Aura FARM',
+    name: 'CommuniAI',
+    description: 'Helping bridge communication for the deaf community.',
+    link: 'https://github.com/Onkarsathe007/CommuniAI',
   },
 ]
 
@@ -87,47 +46,50 @@ export default function Home() {
                 start
               </Link>
               <Link href="/agents" className="home-nav-link">
-                agents
+                projects
               </Link>
               <Link href="/writeups" className="home-nav-link">
-                writeups
+                blogs
               </Link>
               <Link href="/shitposts" className="home-nav-link">
-                shitposts
+                notes
               </Link>
             </div>
             <ThemeToggle />
           </header>
 
           <div className="home-intro-sidebar">
-            <img src="/img.jpeg" alt="Kedar Vartak" className="home-profile-img" />
-            <h1 className="home-title">Kedar Vartak</h1>
-            <p className="home-lead">
-              I build software with a bias toward practical systems, clean execution, and tools that compound over time.
-            </p>
+            <img
+              src="https://res.cloudinary.com/dn6xis9je/image/upload/v1780646159/onkar_v40zai.jpg"
+              alt="Onkar Sathe"
+              className="home-profile-img"
+            />
+            <h1 className="home-title">Onkar Sathe</h1>
+            <p className="home-lead">I build things, break them, and watch them come alive - this process is what I love..</p>
           </div>
         </aside>
 
         <section className="split-main">
           <div className="home-intro">
             <p className="home-paragraph">
-              I work at{' '}
-              <a href="https://www.loopr.ai" target="_blank" rel="noopener noreferrer" className="inline-link">
-                Loopr.ai
+              Hello! I&apos;m{' '}
+              <a href="https://github.com/onkarsathe007" target="_blank" rel="noopener noreferrer" className="inline-link">
+                Onkar Sathe
               </a>{' '}
-              as a software engineer, tackling complex engineering problems and keeping up with emergent technologies. My
-              short term goal is to add a new skill to my{' '}
-              <a href="https://github.com/kedarvartak" target="_blank" rel="noopener noreferrer" className="inline-link">
-                brain.md
-              </a>{' '}
-              every single week, while building a side‑hustle, money‑making machine by the end of this year.
+              incoming SDE Intern at{' '}
+              <a href="https://www.wolterskluwer.com/" target="_blank" rel="noopener noreferrer" className="inline-link">
+                Wolters Kluwer
+              </a>
+              {' '} and final-year B.Tech student at{' '}
+              <a href="https://viit.ac.in/" target="_blank" rel="noopener noreferrer" className="inline-link">
+                VIIT Pune
+              </a>
+              {''}
+              . I love building software systems that solve real problems for real people.
             </p>
             <p className="home-paragraph">
-              I care the most about AI infrastructure, memory and tooling. I prefer to call myself a generalist and not
-              specialist. I bench 210lbs, workout 365 days a year.
-            </p>
+              I enjoy working across the stack, approaching cloud and DevOps with the same wide-eyed curiosity as a child discovering something new, learning fast, and shipping clean, practical experiences. I also love participating in hackathons, where I get to build, learn, and ship under pressure.            </p>
           </div>
-
           <div className="home-section">
             <h2 className="home-section-title">Highlights</h2>
             <ul className="home-highlights-list">
@@ -140,19 +102,41 @@ export default function Home() {
             </ul>
           </div>
 
+          <div className="home-section">
+            <h2 className="home-section-title">Technical Skills</h2>
+            <div className="agent-meta-row">
+              {skills.map((skill) => (
+                <span key={skill} className="agent-meta-item">
+                  {skill}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          <div className="home-section">
+            <h2 className="home-section-title">Featured Projects</h2>
+            <ul className="home-highlights-list">
+              {projects.map((project) => (
+                <li key={project.name} className="home-highlight-item">
+                  <span className="home-highlight-label">{project.name}</span>
+                  <div className="home-highlight-content">
+                    {project.description}{' '}
+                    <a href={project.link} target="_blank" rel="noopener noreferrer" className="inline-link">
+                      github
+                    </a>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+
           <footer className="home-footer">
             <div className="home-footer-links">
-              <a href="mailto:kedarvartak01@gmail.com" className="inline-link">
+              <a href="mailto:onkarsathe96k@gmail.com" className="inline-link">
                 email
               </a>
-              <a href="https://github.com/kedarvartak" target="_blank" rel="noopener noreferrer" className="inline-link">
+              <a href="https://github.com/Onkarsathe007" target="_blank" rel="noopener noreferrer" className="inline-link">
                 github
-              </a>
-              <a href="https://linkedin.com/in/kedar-vartak20" target="_blank" rel="noopener noreferrer" className="inline-link">
-                linkedin
-              </a>
-              <a href="https://twitter.com/kedar2sexy" target="_blank" rel="noopener noreferrer" className="inline-link">
-                twitter
               </a>
             </div>
           </footer>

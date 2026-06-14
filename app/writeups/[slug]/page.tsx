@@ -22,12 +22,12 @@ export async function generateMetadata({
 
   if (!writeup) {
     return {
-      title: 'Writeup Not Found - Kedar Vartak',
+      title: 'Blog Not Found - Onkar Sathe',
     }
   }
 
   return {
-    title: `${writeup.title} - Kedar Vartak`,
+    title: `${writeup.title} - Onkar Sathe`,
     description: writeup.excerpt,
   }
 }
@@ -53,13 +53,13 @@ export default async function WriteupDetailPage({
                 start
               </Link>
               <Link href="/agents" className="home-nav-link">
-                agents
+                projects
               </Link>
               <Link href="/writeups" className="home-nav-link home-nav-link-active">
-                writeups
+                blogs
               </Link>
               <Link href="/shitposts" className="home-nav-link">
-                shitposts
+                notes
               </Link>
             </div>
             <ThemeToggle />
@@ -80,7 +80,7 @@ export default async function WriteupDetailPage({
           <footer className="home-footer">
             <div className="home-footer-links">
               <Link href="/writeups" className="inline-link">
-                all writeups
+                all blogs
               </Link>
             </div>
           </footer>
