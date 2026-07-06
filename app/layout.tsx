@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Victor_Mono } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
+import { Providers } from './providers'
 
 const victorMono = Victor_Mono({
   subsets: ['latin'],
@@ -37,7 +38,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={victorMono.variable}>
-        {children}
+        <Providers>{children}</Providers>
         <Analytics />
       </body>
     </html>
