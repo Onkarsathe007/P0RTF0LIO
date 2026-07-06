@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "h0me-lab-setup.md",
-                "mode": "source",
+                "file": "redis-from-first-principles.md",
+                "mode": "preview",
                 "source": true
               },
               "icon": "lucide-file",
-              "title": "h0me-lab-setup"
+              "title": "redis-from-first-principles"
             }
           }
         ]
@@ -181,14 +181,23 @@
       "templates:Insert template": false,
       "command-palette:Open command palette": false,
       "bases:Create new base": false,
-      "omnisearch:Omnisearch": false
+      "omnisearch:Omnisearch": false,
+      "templater-obsidian:Templater": false
     }
   },
   "active": "a324b5d7b80aaeeb",
   "lastOpenFiles": [
+    "img/redis-from-first-principles-1781698985235.webp",
+    "img/redis-from-first-principles-1781698971381.webp",
+    "img/redis-from-first-principles-1781698292181.webp",
+    "img/redis-from-first-principles-1781698075587.webp",
+    "img/redis-from-first-principles-1781698043886.webp",
+    "breaking-down-addictions.md",
+    "redis-from-first-principles.md",
+    "img/breaking-down-addictions-1781510961035.webp",
+    "h0me-lab-setup.md",
     "page.md",
     "my-full-stack-learning-path.md",
-    "h0me-lab-setup.md",
     "img/welcome-to-my-blogs-1781428387679.webp",
     "projects-that-shaped-my-journey.md",
     "img/welcome-to-my-blogs-1781420803453.webp",

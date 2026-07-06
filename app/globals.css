@@ -187,6 +187,48 @@ body {
   margin-bottom: 1.5rem;
 }
 
+.home-profile-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+  margin-top: -0.25rem;
+  margin-bottom: 0.25rem;
+}
+
+.home-profile-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  min-height: 2.65rem;
+  padding: 0.7rem 1rem;
+  border: 1px solid var(--line);
+  border-radius: 0;
+  background-color: var(--surface-elevated);
+  color: var(--text);
+  text-decoration: none;
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
+  line-height: 1;
+  transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease, color 0.2s ease;
+}
+
+.home-profile-button:hover {
+  background-color: color-mix(in srgb, var(--text) 4%, var(--surface-elevated));
+  border-color: color-mix(in srgb, var(--text) 35%, var(--line));
+  transform: translateY(-1px);
+}
+
+.home-profile-button:focus-visible {
+  outline: 2px solid var(--text);
+  outline-offset: 2px;
+}
+
+.home-profile-button-primary {
+  background-color: var(--bg);
+}
+
 .home-title {
   font-size: clamp(1.8rem, 3.2vw, 2.8rem);
   font-weight: 700;
@@ -526,6 +568,48 @@ body {
   border: 1px solid var(--line);
 }
 
+.markdown-table-wrapper {
+  overflow-x: auto;
+  margin: 0.5rem 0;
+}
+
+.markdown-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.925rem;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+.markdown-table-cell {
+  padding: 0.6rem 0.85rem;
+  border: 1px solid var(--line);
+  text-align: left;
+  vertical-align: top;
+}
+
+.markdown-table-header {
+  font-weight: 600;
+  color: var(--text);
+  background-color: var(--surface-elevated);
+}
+
+.markdown-table-center {
+  text-align: center;
+}
+
+.markdown-table-right {
+  text-align: right;
+}
+
+.markdown-table tbody tr:nth-child(even) {
+  background-color: var(--surface-elevated);
+}
+
+.markdown-table tbody tr:hover {
+  background-color: color-mix(in srgb, var(--accent) 8%, var(--surface));
+}
+
 .mermaid-shell {
   padding: 1rem;
   overflow-x: auto;
@@ -661,8 +745,25 @@ a {
     font-size: 1rem;
   }
 
+  .home-profile-actions {
+    width: 100%;
+  }
+
+  .home-profile-button {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+
   .home-highlight-content {
     font-size: 1.05rem;
+  }
+
+  .home-profile-actions {
+    gap: 0.65rem;
+  }
+
+  .home-profile-button {
+    padding: 0.65rem 0.9rem;
   }
 
   .home-footer {

@@ -21,6 +21,8 @@ function renderInline(text: string) {
   })
 }
 
+type Alignment = 'left' | 'center' | 'right'
+
 type Block =
   | { type: 'heading'; level: 1 | 2 | 3; text: string }
   | { type: 'paragraph'; text: string }
@@ -28,6 +30,7 @@ type Block =
   | { type: 'unordered-list'; items: string[] }
   | { type: 'ordered-list'; items: string[] }
   | { type: 'code'; language: string; content: string }
+  | { type: 'table'; headers: string[]; rows: string[][]; alignments: Alignment[] }
 
 function decodeURIComponentSafe(value: string) {
   try {
@@ -47,6 +50,27 @@ function toAssetSrc(rawPath: string) {
     .join('/')
 
   return `/writeups-assets/${encodedPath}`
+}
+
+function parseRow(line: string): string[] {
+  return line
+    .split('|')
+    .slice(1, -1)
+    .map((cell) => cell.trim())
+}
+
+function parseAlignments(separator: string): Alignment[] {
+  return separator
+    .split('|')
+    .slice(1, -1)
+    .map((cell) => cell.trim())
+    .map((cell) => {
+      const left = cell.startsWith(':')
+      const right = cell.endsWith(':')
+      if (left && right) return 'center'
+      if (right) return 'right'
+      return 'left'
+    })
 }
 
 function parseBlocks(markdown: string): Block[] {
@@ -143,6 +167,28 @@ function parseBlocks(markdown: string): Block[] {
       continue
     }
 
+    if (trimmedLine.startsWith('|')) {
+      const tableLines: string[] = []
+
+      while (index < lines.length && lines[index].trim().startsWith('|')) {
+        tableLines.push(lines[index].trim())
+        index += 1
+      }
+
+      if (tableLines.length >= 2) {
+        const headers = parseRow(tableLines[0])
+        const alignments = parseAlignments(tableLines[1])
+        const rows = tableLines.slice(2).map((line) => parseRow(line))
+        blocks.push({ type: 'table', headers, rows, alignments })
+        continue
+      }
+
+      for (const line of tableLines) {
+        blocks.push({ type: 'paragraph', text: line })
+      }
+      continue
+    }
+
     const paragraph: string[] = []
 
     while (
@@ -234,6 +280,41 @@ export function MarkdownRenderer({
                 <li key={itemIndex}>{renderInline(item)}</li>
               ))}
             </ol>
+          )
+        }
+
+        if (block.type === 'table') {
+          return (
+            <div key={index} className="markdown-table-wrapper">
+              <table className="markdown-table">
+                <thead>
+                  <tr>
+                    {block.headers.map((header, colIndex) => (
+                      <th
+                        key={colIndex}
+                        className={`markdown-table-cell markdown-table-header ${block.alignments[colIndex] === 'center' ? 'markdown-table-center' : block.alignments[colIndex] === 'right' ? 'markdown-table-right' : ''}`}
+                      >
+                        {renderInline(header)}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {block.rows.map((row, rowIndex) => (
+                    <tr key={rowIndex}>
+                      {row.map((cell, colIndex) => (
+                        <td
+                          key={colIndex}
+                          className={`markdown-table-cell ${block.alignments[colIndex] === 'center' ? 'markdown-table-center' : block.alignments[colIndex] === 'right' ? 'markdown-table-right' : ''}`}
+                        >
+                          {renderInline(cell)}
+                        </td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           )
         }
 

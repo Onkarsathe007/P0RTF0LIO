@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build": "next build",
+    "generate-writeups-data": "ts-node scripts/generate-writeups-data.ts",
+    "build": "npm run generate-writeups-data && next build",
     "dev": "next dev",
     "start": "next start",
     "lint": "eslint .",
@@ -26,7 +27,8 @@
     "@types/react-dom": "19.2.3",
     "eslint": "^9.39.4",
     "eslint-config-next": "^16.2.9",
-    "typescript": "^5.4.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3",
     "wrangler": "^4.100.0"
   },
   "overrides": {

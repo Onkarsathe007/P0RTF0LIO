@@ -64,6 +64,24 @@ export default function Home() {
               alt="Onkar Sathe"
               className="home-profile-img"
             />
+            <div className="home-profile-actions" aria-label="Profile actions">
+              <a
+                href="/resume.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="home-profile-button home-profile-button-primary"
+              >
+                <span>Resume</span>
+              </a>
+              <a
+                href="https://github.com/Onkarsathe007"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="home-profile-button"
+              >
+                <span>GitHub</span>
+              </a>
+            </div>
             <h1 className="home-title">Onkar Sathe</h1>
             <p className="home-lead">I build things, break them, and watch them come alive - this process is what I love..</p>
           </div>
