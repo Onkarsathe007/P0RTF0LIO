@@ -361,6 +361,64 @@ body {
   justify-content: space-between;
 }
 
+/* Giant footer logotype — text-based recreation of
+   ref/chanhdai.com SiteFooterInteractiveLogotype vibe */
+.footer-logotype {
+  position: relative;
+  max-width: 100%;
+  overflow-x: clip;
+  margin-top: 2.5rem;
+  border-top: 1px solid var(--line);
+}
+
+.footer-logotype-clip {
+  overflow: hidden;
+}
+
+.footer-logotype-crop {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  transform: translateY(37.5%);
+}
+
+.footer-logotype-svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.footer-logotype-text {
+  font-family: var(--font-geist-pixel), var(--font-victor-mono), monospace;
+  font-weight: 400;
+  font-size: 208px;
+  letter-spacing: 0.01em;
+}
+
+.footer-logotype-glow {
+  pointer-events: none;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  display: none;
+  height: 1px;
+  width: 50%;
+  max-width: 100%;
+  transform: translateX(-50%);
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(255, 255, 255, 0) 0%,
+    color-mix(in srgb, var(--text) 30%, transparent) 50%,
+    rgba(0, 0, 0, 0) 100%
+  );
+}
+
+[data-theme='dark'] .footer-logotype-glow {
+  display: block;
+}
+
 .home-footer-links {
   display: flex;
   flex-wrap: wrap;

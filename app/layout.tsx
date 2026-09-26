@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Victor_Mono } from 'next/font/google'
+import { Victor_Mono, Geist_Pixel } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 import { Providers } from './providers'
@@ -8,6 +8,13 @@ const victorMono = Victor_Mono({
   subsets: ['latin'],
   weight: ['400', '500', '600', '700'],
   variable: '--font-victor-mono',
+})
+
+const geistPixel = Geist_Pixel({
+  subsets: ['latin'],
+  variable: '--font-geist-pixel',
+  display: 'swap',
+  adjustFontFallback: false,
 })
 
 export const metadata: Metadata = {
@@ -37,7 +44,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={victorMono.variable}>
+      <body className={`${victorMono.variable} ${geistPixel.variable}`}>
         <Providers>{children}</Providers>
         <Analytics />
       </body>

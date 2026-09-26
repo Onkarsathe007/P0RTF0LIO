@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { ThemeToggle } from './components/theme-toggle'
+import { SiteFooterLogotype } from './components/site-footer-logotype'
 
 const highlights = [
   {
@@ -158,6 +159,8 @@ export default function Home() {
               </a>
             </div>
           </footer>
+
+          <SiteFooterLogotype />
         </section>
       </div>
     </main>
