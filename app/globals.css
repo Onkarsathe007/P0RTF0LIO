@@ -87,6 +87,8 @@ body {
   padding: 2.5rem 4rem;
   height: 100%;
   max-height: 90vh; /* Keep it within view */
+  border-left: 1px solid var(--line);
+  border-right: 1px solid var(--line);
 }
 
 .split-sidebar {
@@ -417,6 +419,123 @@ body {
 
 [data-theme='dark'] .footer-logotype-glow {
   display: block;
+}
+
+/* Blueprint frame + rules.
+   Plain-CSS port of ref/chanhdai.com screen-line utilities.
+   Deliberately column-width (not their -100vw/200vw bleed):
+   .split-main is an internal scroll container, so viewport-bleed
+   pseudos would spawn horizontal scrollbars. At 1400px the frame
+   spans nearly the full viewport anyway. */
+.rule-top {
+  position: relative;
+}
+
+.rule-top::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--line);
+  pointer-events: none;
+}
+
+.rule-bottom {
+  position: relative;
+}
+
+.rule-bottom::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--line);
+  pointer-events: none;
+}
+
+.stripe-band {
+  height: 2rem;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  background: repeating-linear-gradient(
+    315deg,
+    color-mix(in srgb, var(--line) 56%, transparent) 0,
+    color-mix(in srgb, var(--line) 56%, transparent) 1px,
+    transparent 0,
+    transparent 50%
+  );
+  background-size: 10px 10px;
+}
+
+/* Panel box — plain-CSS port of ref/chanhdai.com Panel
+   (bordered section + header row with divider). */
+.panel {
+  border: 1px solid var(--line);
+}
+
+.panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.65rem 1.25rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.panel-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--subtle);
+  font-weight: 600;
+}
+
+.panel-body {
+  padding: 1.25rem;
+}
+
+.collection-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.collection-item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+  padding: 1.25rem 0;
+}
+
+.collection-item:first-child {
+  padding-top: 0;
+}
+
+.collection-item:last-child {
+  padding-bottom: 0;
+}
+
+.collection-item + .collection-item {
+  border-top: 1px solid var(--line);
+}
+
+.collection-points {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  font-size: 0.95rem;
+  color: var(--muted);
+}
+
+.collection-points li::before {
+  content: "— ";
+  color: var(--subtle);
 }
 
 .home-footer-links {

@@ -39,19 +39,30 @@ export default async function WriteupsPage() {
         </aside>
 
         <section className="split-main">
-          <div className="writeups-list">
-            {writeups.map((item) => (
-              <article key={item.slug} className="writeup-item">
-                <span className="writeup-date">{item.date}</span>
-                <h2 className="writeup-title">
-                  <Link href={`/writeups/${item.slug}`} className="writeup-link">
-                    {item.title}
-                  </Link>
-                </h2>
-                <p className="writeup-content">{item.excerpt}</p>
-              </article>
-            ))}
-          </div>
+          <section className="panel" aria-label="Blogs">
+            <header className="panel-header">
+              <span className="panel-label">blogs</span>
+            </header>
+            <div className="panel-body">
+              {writeups.length === 0 ? (
+                <p className="home-paragraph">No posts yet — check back soon.</p>
+              ) : (
+                <ul className="collection-list">
+                  {writeups.map((item) => (
+                    <li key={item.slug} className="collection-item">
+                      <span className="home-highlight-label">{item.date}</span>
+                      <h2 className="home-highlight-content">
+                        <Link href={`/writeups/${item.slug}`} className="writeup-link">
+                          {item.title}
+                        </Link>
+                      </h2>
+                      <p className="home-paragraph">{item.excerpt}</p>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          </section>
         </section>
       </div>
     </main>

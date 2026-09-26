@@ -25,13 +25,36 @@ const skills = ['Typescript', 'Java', 'Go', 'AWS', 'Docker', 'Kubernetes', 'Redi
 
 const projects = [
   {
+    category: 'Full Stack Project',
+    name: 'Fastshop',
+    description: 'An e-commerce oriented project focused on end-to-end product flows, clean UX, and practical implementation.',
+    points: [
+      'Product-style architecture',
+      'Backend + frontend flow ownership',
+      'Hands-on full-stack execution',
+    ],
+    link: 'https://github.com/Onkarsathe007/Fastshop',
+  },
+  {
+    category: 'Developer Experience',
     name: '.dotfiles',
-    description: 'Personalized Arch Linux (Hyprland) rice, built from scratch.',
+    description: 'My personal environment setup to keep development fast, reproducible, and consistent across machines.',
+    points: [
+      'Productivity-first setup',
+      'Reusable terminal/editor defaults',
+      'Workflow consistency',
+    ],
     link: 'https://github.com/Onkarsathe007/dotfiles',
   },
   {
+    category: 'AI Project',
     name: 'CommuniAI',
-    description: 'Helping bridge communication for the deaf community.',
+    description: 'An AI-focused project exploring communication workflows, automation, and practical assistant-driven tooling.',
+    points: [
+      'AI-first product thinking',
+      'Applied experimentation',
+      'Practical automation mindset',
+    ],
     link: 'https://github.com/Onkarsathe007/CommuniAI',
   },
 ]
@@ -89,7 +112,11 @@ export default function Home() {
         </aside>
 
         <section className="split-main">
-          <div className="home-intro">
+          <section className="panel" aria-label="About">
+            <header className="panel-header">
+              <span className="panel-label">about</span>
+            </header>
+            <div className="panel-body home-intro">
             <p className="home-paragraph">
               Hello! I&apos;m{' '}
               <a href="https://github.com/onkarsathe007" target="_blank" rel="noopener noreferrer" className="inline-link">
@@ -108,9 +135,13 @@ export default function Home() {
             </p>
             <p className="home-paragraph">
               I enjoy working across the stack, approaching cloud and DevOps with the same wide-eyed curiosity as a child discovering something new, learning fast, and shipping clean, practical experiences. I also love participating in hackathons, where I get to build, learn, and ship under pressure.            </p>
-          </div>
-          <div className="home-section">
-            <h2 className="home-section-title">Highlights</h2>
+            </div>
+          </section>
+          <section className="panel" aria-label="Highlights">
+            <header className="panel-header">
+              <span className="panel-label">highlights</span>
+            </header>
+            <div className="panel-body">
             <ul className="home-highlights-list">
               {highlights.map((item) => (
                 <li key={item.label} className="home-highlight-item">
@@ -119,10 +150,14 @@ export default function Home() {
                 </li>
               ))}
             </ul>
-          </div>
+            </div>
+          </section>
 
-          <div className="home-section">
-            <h2 className="home-section-title">Technical Skills</h2>
+          <section className="panel" aria-label="Technical Skills">
+            <header className="panel-header">
+              <span className="panel-label">technical skills</span>
+            </header>
+            <div className="panel-body">
             <div className="agent-meta-row">
               {skills.map((skill) => (
                 <span key={skill} className="agent-meta-item">
@@ -130,24 +165,33 @@ export default function Home() {
                 </span>
               ))}
             </div>
-          </div>
+            </div>
+          </section>
 
-          <div className="home-section">
-            <h2 className="home-section-title">Featured Projects</h2>
-            <ul className="home-highlights-list">
+          <section className="panel" aria-label="Project Collection">
+            <header className="panel-header">
+              <span className="panel-label">project collection</span>
+            </header>
+            <div className="panel-body">
+            <ul className="collection-list">
               {projects.map((project) => (
-                <li key={project.name} className="home-highlight-item">
-                  <span className="home-highlight-label">{project.name}</span>
-                  <div className="home-highlight-content">
-                    {project.description}{' '}
-                    <a href={project.link} target="_blank" rel="noopener noreferrer" className="inline-link">
-                      github
-                    </a>
-                  </div>
+                <li key={project.name} className="collection-item">
+                  <span className="home-highlight-label">{project.category}</span>
+                  <div className="home-highlight-content">{project.name}</div>
+                  <p className="home-paragraph">{project.description}</p>
+                  <ul className="collection-points">
+                    {project.points.map((point) => (
+                      <li key={point}>{point}</li>
+                    ))}
+                  </ul>
+                  <a href={project.link} target="_blank" rel="noopener noreferrer" className="inline-link">
+                    View on GitHub →
+                  </a>
                 </li>
               ))}
             </ul>
-          </div>
+            </div>
+          </section>
 
           <footer className="home-footer">
             <div className="home-footer-links">
@@ -159,6 +203,8 @@ export default function Home() {
               </a>
             </div>
           </footer>
+
+          <div className="stripe-band" aria-hidden />
 
           <SiteFooterLogotype />
         </section>
