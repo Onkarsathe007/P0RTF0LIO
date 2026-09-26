@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "generate-writeups-data": "ts-node scripts/generate-writeups-data.ts",
-    "build": "npm run generate-writeups-data && next build",
+    "build": "npm run generate-writeups-data && next build --webpack",
     "dev": "next dev",
     "start": "next start",
     "lint": "eslint .",
