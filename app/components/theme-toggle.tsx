@@ -18,7 +18,13 @@ export const ThemeToggle = () => {
     setMounted(true)
   }, [])
 
+  const playToggleSound = () => {
+    const audio = new Audio('/audio/theme-toggle.mp3')
+    audio.play().catch(() => {})
+  }
+
   const toggleTheme = async () => {
+    playToggleSound()
     const newTheme = currentTheme === 'dark' ? 'light' : 'dark'
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     const startViewTransition = document.startViewTransition?.bind(document)

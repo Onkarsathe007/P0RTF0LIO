@@ -107,13 +107,29 @@ function FlipLines({ lines }: { lines: string[] }) {
 export function ProfileHeader() {
   const waveRef = useRef<WaveHandle>(null)
 
-  const speakName = () => {
-    waveRef.current?.ripple()
+  const speakWithVoice = () => {
     if (!('speechSynthesis' in window)) return
     window.speechSynthesis.cancel()
     const utterance = new SpeechSynthesisUtterance('Onkar Sathe')
     utterance.rate = 0.95
     window.speechSynthesis.speak(utterance)
+  }
+
+  const playRecording = () =>
+    new Promise<void>((resolve, reject) => {
+      const audio = new Audio('/audio/onkar-sathe.mp3')
+      audio.onended = () => resolve()
+      audio.onerror = () => reject(new Error('missing audio file'))
+      audio.play().catch(() => reject(new Error('playback blocked')))
+    })
+
+  const speakName = async () => {
+    waveRef.current?.ripple()
+    try {
+      await playRecording()
+    } catch {
+      speakWithVoice()
+    }
   }
 
   useEffect(() => {

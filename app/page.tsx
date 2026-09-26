@@ -2,64 +2,10 @@ import Link from 'next/link'
 import { ThemeToggle } from './components/theme-toggle'
 import { ProfileHeader } from './components/profile-header'
 import { SocialLinks } from './components/social-links'
+import { Experience } from './components/experience'
 import { SiteFooterLogotype } from './components/site-footer-logotype'
 
-const highlights = [
-  {
-    label: 'Role',
-    content: 'Backend / Devops',
-  },
-  {
-    label: 'Education',
-    content: 'B-Tech in  AI and Data Science · VIIT Pune',
-  },
-  {
-    label: 'Experience',
-    content: '3.2+ years across freelancing and personal projects ',
-  },
-  {
-    label: 'Focus',
-    content: 'Build technology that solves real problems for real people.',
-  },
-]
-
 const skills = ['Typescript', 'Java', 'Go', 'AWS', 'Docker', 'Kubernetes', 'Redis', 'Git', 'and etc etc']
-
-const projects = [
-  {
-    category: 'Full Stack Project',
-    name: 'Fastshop',
-    description: 'An e-commerce oriented project focused on end-to-end product flows, clean UX, and practical implementation.',
-    points: [
-      'Product-style architecture',
-      'Backend + frontend flow ownership',
-      'Hands-on full-stack execution',
-    ],
-    link: 'https://github.com/Onkarsathe007/Fastshop',
-  },
-  {
-    category: 'Developer Experience',
-    name: '.dotfiles',
-    description: 'My personal environment setup to keep development fast, reproducible, and consistent across machines.',
-    points: [
-      'Productivity-first setup',
-      'Reusable terminal/editor defaults',
-      'Workflow consistency',
-    ],
-    link: 'https://github.com/Onkarsathe007/dotfiles',
-  },
-  {
-    category: 'AI Project',
-    name: 'CommuniAI',
-    description: 'An AI-focused project exploring communication workflows, automation, and practical assistant-driven tooling.',
-    points: [
-      'AI-first product thinking',
-      'Applied experimentation',
-      'Practical automation mindset',
-    ],
-    link: 'https://github.com/Onkarsathe007/CommuniAI',
-  },
-]
 
 export default function Home() {
   return (
@@ -140,21 +86,7 @@ export default function Home() {
                 I enjoy working across the stack, approaching cloud and DevOps with the same wide-eyed curiosity as a child discovering something new, learning fast, and shipping clean, practical experiences. I also love participating in hackathons, where I get to build, learn, and ship under pressure.            </p>
             </div>
           </section>
-          <section className="panel" aria-label="Highlights">
-            <header className="panel-header">
-              <span className="panel-label">highlights</span>
-            </header>
-            <div className="panel-body">
-              <ul className="home-highlights-list">
-                {highlights.map((item) => (
-                  <li key={item.label} className="home-highlight-item">
-                    <span className="home-highlight-label">{item.label}</span>
-                    <div className="home-highlight-content">{item.content}</div>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </section>
+          <Experience />
 
           <section className="panel" aria-label="Technical Skills">
             <header className="panel-header">
@@ -171,30 +103,7 @@ export default function Home() {
             </div>
           </section>
 
-          <section className="panel" aria-label="Project Collection">
-            <header className="panel-header">
-              <span className="panel-label">project collection</span>
-            </header>
-            <div className="panel-body">
-              <ul className="collection-list">
-                {projects.map((project) => (
-                  <li key={project.name} className="collection-item">
-                    <span className="home-highlight-label">{project.category}</span>
-                    <div className="home-highlight-content">{project.name}</div>
-                    <p className="home-paragraph">{project.description}</p>
-                    <ul className="collection-points">
-                      {project.points.map((point) => (
-                        <li key={point}>{point}</li>
-                      ))}
-                    </ul>
-                    <a href={project.link} target="_blank" rel="noopener noreferrer" className="inline-link">
-                      View on GitHub →
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </section>
+          <Experience id="education" label="education" />
 
           <footer className="home-footer">
             <div className="home-footer-links">
