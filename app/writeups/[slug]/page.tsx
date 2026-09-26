@@ -60,8 +60,8 @@ export default async function WriteupDetailPage(
               <Link href="/writeups" className="home-nav-link home-nav-link-active">
                 blogs
               </Link>
-              <Link href="/shitposts" className="home-nav-link">
-                notes
+              <Link href="/contact" className="home-nav-link">
+                contact
               </Link>
             </div>
             <ThemeToggle />

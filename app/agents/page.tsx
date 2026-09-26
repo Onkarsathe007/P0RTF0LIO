@@ -49,8 +49,8 @@ export default function ProjectsPage() {
               <Link href="/writeups" className="home-nav-link">
                 blogs
               </Link>
-              <Link href="/shitposts" className="home-nav-link">
-                notes
+              <Link href="/contact" className="home-nav-link">
+                contact
               </Link>
             </div>
             <ThemeToggle />

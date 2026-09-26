@@ -1,5 +1,7 @@
 import Link from 'next/link'
 import { ThemeToggle } from './components/theme-toggle'
+import { ProfileHeader } from './components/profile-header'
+import { SocialLinks } from './components/social-links'
 import { SiteFooterLogotype } from './components/site-footer-logotype'
 
 const highlights = [
@@ -75,8 +77,8 @@ export default function Home() {
               <Link href="/writeups" className="home-nav-link">
                 blogs
               </Link>
-              <Link href="/shitposts" className="home-nav-link">
-                notes
+              <Link href="/contact" className="home-nav-link">
+                contact
               </Link>
             </div>
             <ThemeToggle />
@@ -88,7 +90,7 @@ export default function Home() {
               alt="Onkar Sathe"
               className="home-profile-img"
             />
-            <div className="home-profile-actions" aria-label="Profile actions">
+            {/* <div className="home-profile-actions" aria-label="Profile actions">
               <a
                 href="/resume.pdf"
                 target="_blank"
@@ -105,9 +107,10 @@ export default function Home() {
               >
                 <span>GitHub</span>
               </a>
-            </div>
-            <h1 className="home-title">Onkar Sathe</h1>
-            <p className="home-lead">I build things, break them, and watch them come alive - this process is what I love..</p>
+            </div> */}
+            <SocialLinks />
+            <ProfileHeader />
+            <p className="home-lead">hehe :)</p>
           </div>
         </aside>
 
@@ -117,24 +120,24 @@ export default function Home() {
               <span className="panel-label">about</span>
             </header>
             <div className="panel-body home-intro">
-            <p className="home-paragraph">
-              Hello! I&apos;m{' '}
-              <a href="https://github.com/onkarsathe007" target="_blank" rel="noopener noreferrer" className="inline-link">
-                Onkar Sathe
-              </a>{' '}
-              incoming SDE Intern at{' '}
-              <a href="https://www.wolterskluwer.com/" target="_blank" rel="noopener noreferrer" className="inline-link">
-                Wolters Kluwer
-              </a>
-              {' '} and final-year B.Tech student at{' '}
-              <a href="https://viit.ac.in/" target="_blank" rel="noopener noreferrer" className="inline-link">
-                VIIT Pune
-              </a>
-              {''}
-              . I love building software systems that solve real problems for real people.
-            </p>
-            <p className="home-paragraph">
-              I enjoy working across the stack, approaching cloud and DevOps with the same wide-eyed curiosity as a child discovering something new, learning fast, and shipping clean, practical experiences. I also love participating in hackathons, where I get to build, learn, and ship under pressure.            </p>
+              <p className="home-paragraph">
+                Hello! I&apos;m{' '}
+                <a href="https://github.com/onkarsathe007" target="_blank" rel="noopener noreferrer" className="inline-link">
+                  Onkar Sathe
+                </a>{' '}
+                incoming SDE Intern at{' '}
+                <a href="https://www.wolterskluwer.com/" target="_blank" rel="noopener noreferrer" className="inline-link">
+                  Wolters Kluwer
+                </a>
+                {' '} and final-year B.Tech student at{' '}
+                <a href="https://viit.ac.in/" target="_blank" rel="noopener noreferrer" className="inline-link">
+                  VIIT Pune
+                </a>
+                {''}
+                . I love building software systems that solve real problems for real people.
+              </p>
+              <p className="home-paragraph">
+                I enjoy working across the stack, approaching cloud and DevOps with the same wide-eyed curiosity as a child discovering something new, learning fast, and shipping clean, practical experiences. I also love participating in hackathons, where I get to build, learn, and ship under pressure.            </p>
             </div>
           </section>
           <section className="panel" aria-label="Highlights">
@@ -142,14 +145,14 @@ export default function Home() {
               <span className="panel-label">highlights</span>
             </header>
             <div className="panel-body">
-            <ul className="home-highlights-list">
-              {highlights.map((item) => (
-                <li key={item.label} className="home-highlight-item">
-                  <span className="home-highlight-label">{item.label}</span>
-                  <div className="home-highlight-content">{item.content}</div>
-                </li>
-              ))}
-            </ul>
+              <ul className="home-highlights-list">
+                {highlights.map((item) => (
+                  <li key={item.label} className="home-highlight-item">
+                    <span className="home-highlight-label">{item.label}</span>
+                    <div className="home-highlight-content">{item.content}</div>
+                  </li>
+                ))}
+              </ul>
             </div>
           </section>
 
@@ -158,13 +161,13 @@ export default function Home() {
               <span className="panel-label">technical skills</span>
             </header>
             <div className="panel-body">
-            <div className="agent-meta-row">
-              {skills.map((skill) => (
-                <span key={skill} className="agent-meta-item">
-                  {skill}
-                </span>
-              ))}
-            </div>
+              <div className="agent-meta-row">
+                {skills.map((skill) => (
+                  <span key={skill} className="agent-meta-item">
+                    {skill}
+                  </span>
+                ))}
+              </div>
             </div>
           </section>
 
@@ -173,23 +176,23 @@ export default function Home() {
               <span className="panel-label">project collection</span>
             </header>
             <div className="panel-body">
-            <ul className="collection-list">
-              {projects.map((project) => (
-                <li key={project.name} className="collection-item">
-                  <span className="home-highlight-label">{project.category}</span>
-                  <div className="home-highlight-content">{project.name}</div>
-                  <p className="home-paragraph">{project.description}</p>
-                  <ul className="collection-points">
-                    {project.points.map((point) => (
-                      <li key={point}>{point}</li>
-                    ))}
-                  </ul>
-                  <a href={project.link} target="_blank" rel="noopener noreferrer" className="inline-link">
-                    View on GitHub →
-                  </a>
-                </li>
-              ))}
-            </ul>
+              <ul className="collection-list">
+                {projects.map((project) => (
+                  <li key={project.name} className="collection-item">
+                    <span className="home-highlight-label">{project.category}</span>
+                    <div className="home-highlight-content">{project.name}</div>
+                    <p className="home-paragraph">{project.description}</p>
+                    <ul className="collection-points">
+                      {project.points.map((point) => (
+                        <li key={point}>{point}</li>
+                      ))}
+                    </ul>
+                    <a href={project.link} target="_blank" rel="noopener noreferrer" className="inline-link">
+                      View on GitHub →
+                    </a>
+                  </li>
+                ))}
+              </ul>
             </div>
           </section>
 
