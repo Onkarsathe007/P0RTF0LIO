@@ -6,7 +6,7 @@ Personal portfolio built with Next.js App Router and TypeScript.
 - **Start** (`/`) – intro, highlights, skills, featured projects
 - **Projects** (`/agents`) – project showcase
 - **Blogs** (`/writeups`) – markdown-based blog posts
-- **Notes** (`/shitposts`) – short-form personal notes
+- **/contacts** (`/contacts`) – for the contact info
 
 ## Blog Writing Workflow (Obsidian + GitHub)
 - Open `writeups/` as your Obsidian vault.
