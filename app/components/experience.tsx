@@ -205,7 +205,7 @@ export const EDUCATION: Company[] = [
         id: 'btech',
         title: 'B.Tech Student',
         employmentType: 'B.Tech',
-        extra: 'Artificial Intelligence and Data Science',
+        extra: 'AIDS',
         start: '6-2024',
         description: [
           {
@@ -233,7 +233,7 @@ export const EDUCATION: Company[] = [
         id: 'diploma',
         title: 'Diploma Student',
         employmentType: 'Diploma in Polytechnic',
-        extra: 'Computer Science',
+        extra: 'CS',
         start: '2021',
         end: '2024',
         description: [
@@ -257,7 +257,7 @@ export const EDUCATION: Company[] = [
         id: 'ssc',
         title: 'Secondary School Student',
         employmentType: 'Secondary Education',
-        extra: 'SSC Board',
+        extra: 'SSC',
         start: '2020',
         end: '2021',
         description: [

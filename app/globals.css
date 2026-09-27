@@ -1003,6 +1003,39 @@ body {
   color: var(--subtle);
 }
 
+@media (max-width: 640px) {
+  .exp-company-head {
+    gap: 0.5rem;
+  }
+
+  .exp-company-name {
+    white-space: nowrap;
+    font-size: 1.05rem;
+    min-width: 0;
+  }
+
+  .exp-location {
+    font-size: 0.75rem;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .exp-meta {
+    flex-wrap: wrap;
+    row-gap: 0.15rem;
+  }
+
+  .exp-meta > span,
+  .exp-meta > div {
+    white-space: nowrap;
+  }
+
+  .exp-period {
+    white-space: nowrap;
+  }
+}
+
 .exp-skills {
   list-style: none;
   display: flex;
