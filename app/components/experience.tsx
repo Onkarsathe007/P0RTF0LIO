@@ -2,20 +2,23 @@
 
 import { useState } from 'react'
 
+type Bullet = string | { title: string; points: string[] }
+
 type Position = {
   id: string
   title: string
   employmentType?: string
+  extra?: string
   start: string
   end?: string
-  description?: string[]
+  description?: Bullet[]
   skills?: string[]
   expanded?: boolean
 }
 
 type Company = {
   id: string
-  name: string
+  name: React.ReactNode
   website?: string
   logoUrl?: string
   location?: string
@@ -30,6 +33,7 @@ const COMPANIES: Company[] = [
     name: 'Wolters Kluwer',
     website: 'https://www.wolterskluwer.com/',
     logoUrl: 'https://res.cloudinary.com/dn6xis9je/image/upload/v1790452580/WKL.AS_dg2oy6.svg',
+    location: 'Pune, India',
     current: true,
     positions: [
       {
@@ -47,63 +51,41 @@ const COMPANIES: Company[] = [
     ],
   },
   {
-    id: 'lorem-two',
-    name: 'Dolor Sit LLC',
-    website: 'https://example.com/',
-    location: 'Ipsum Town, Loremland',
-    locationType: 'On-site',
+    id: 'sitocrats',
+    name: 'Sitocrats',
+    location: 'Remote',
     positions: [
       {
-        id: 'lorem-position-2',
-        title: 'Ipsum Developer',
-        employmentType: 'Part-time',
-        start: '03.2024',
-        end: '12.2025',
+        id: 'full-stack-dev',
+        title: 'Full Stack Developer',
+        start: '09.2025',
+        end: '11.2025',
         description: [
-          'Ut enim ad minim veniam, quis nostrud exercitation ullamco.',
-          'Duis aute irure dolor in reprehenderit in voluptate velit.',
+          'Worked on DevOps initiatives across the stack.',
+          'Optimized Dockerfiles for leaner, faster builds.',
+          'Wrote YAML pipelines for continuous integration.',
         ],
-        skills: ['Consectetur', 'Adipiscing', 'Elit', 'Eiusmod'],
+        skills: ['AWS ECS', 'AWS EKS', 'GitHub', 'Node.js', 'Kubernetes'],
         expanded: true,
-      },
-    ],
-  },
-  {
-    id: 'lorem-three',
-    name: 'Amet Labs',
-    website: 'https://example.com/',
-    location: 'Dolor City, Ipsumland',
-    locationType: 'Hybrid',
-    positions: [
-      {
-        id: 'lorem-position-3',
-        title: 'Sit Amet Intern',
-        employmentType: 'Internship',
-        start: '06.2023',
-        end: '02.2024',
-        description: [
-          'Excepteur sint occaecat cupidatat non proident.',
-          'Sunt in culpa qui officia deserunt mollit anim id est laborum.',
-        ],
-        skills: ['Tempor', 'Incididunt', 'Labore'],
-        expanded: false,
       },
     ],
   },
 ]
 
 function monthsBetween(start: string, end?: string): string {
+  const norm = (s: string) => s.replace('-', '.')
   const toDate = (s: string, last: boolean) => {
-    if (s.includes('.')) {
-      const [m, y] = s.split('.').map(Number)
+    const n = norm(s)
+    if (n.includes('.')) {
+      const [m, y] = n.split('.').map(Number)
       return new Date(y, last ? m : m - 1, 1)
     }
-    return new Date(Number(s), last ? 11 : 0, 1)
+    return new Date(Number(n), last ? 11 : 0, 1)
   }
   const startDate = toDate(start, false)
   const endDate = end ? toDate(end, true) : new Date()
-  if (!end && !start.includes('.')) {
-    const startYear = new Date(Number(start), 0, 1)
+  if (!end && !norm(start).includes('.')) {
+    const startYear = new Date(Number(norm(start)), 0, 1)
     const total = (endDate.getFullYear() - startYear.getFullYear()) * 12 + (endDate.getMonth() - 0) + 1
     if (total <= 0) return ''
     return total < 12 ? `${total}m` : `${Math.floor(total / 12)}y${total % 12 ? ` ${total % 12}m` : ''}`
@@ -168,13 +150,30 @@ function PositionItem({ position }: { position: Position }) {
               <span>{duration}</span>
             </>
           )}
+          {position.extra && (
+            <>
+              <span className="exp-sep" aria-hidden />
+              <span>{position.extra}</span>
+            </>
+          )}
         </span>
       </button>
       {position.description && open && (
         <ul className="exp-desc">
-          {position.description.map((line) => (
-            <li key={line}>{line}</li>
-          ))}
+          {position.description.map((line) =>
+            typeof line === 'string' ? (
+              <li key={line}>{line}</li>
+            ) : (
+              <li key={line.title}>
+                {line.title}
+                <ul className="exp-sub">
+                  {line.points.map((point) => (
+                    <li key={point}>{point}</li>
+                  ))}
+                </ul>
+              </li>
+            )
+          )}
         </ul>
       )}
       {position.skills && position.skills.length > 0 && (
@@ -189,6 +188,87 @@ function PositionItem({ position }: { position: Position }) {
     </div>
   )
 }
+
+export const EDUCATION: Company[] = [
+  {
+    id: 'viit',
+    name: (
+      <>
+        VI<sup>2</sup>I
+      </>
+    ),
+    website: 'https://viit.ac.in/',
+    logoUrl: 'https://res.cloudinary.com/dn6xis9je/image/upload/v1790486617/idc4pOzohP_logos_1_sj3rnt.jpg',
+    current: true,
+    positions: [
+      {
+        id: 'btech',
+        title: 'B.Tech Student',
+        employmentType: 'B.Tech',
+        extra: 'Artificial Intelligence and Data Science',
+        start: '6-2024',
+        description: [
+          {
+            title: 'Won several Hackathons, including:',
+            points: [
+              'Infineon VIT internal hackathon — First prize',
+              'MIT Kurukshetra national level hackathon — First prize',
+              'Utopia state level hackathon — First prize',
+              'Samarthya SKN COE — Runner-up',
+            ],
+          },
+        ],
+        skills: ['Machine Learning', 'Deep Learning', 'NLP', 'Cloud and DevOps'],
+        expanded: true,
+      },
+    ],
+  },
+  {
+    id: 'njpit',
+    name: 'NJPIT Ahilyanagar',
+    logoUrl: 'https://res.cloudinary.com/dn6xis9je/image/upload/v1790486723/paulbudhe_si3362.jpg',
+    current: false,
+    positions: [
+      {
+        id: 'diploma',
+        title: 'Diploma Student',
+        employmentType: 'Diploma in Polytechnic',
+        extra: 'Computer Science',
+        start: '2021',
+        end: '2024',
+        description: [
+          'College topper for 3 years consecutively.',
+          'Won Avishkar state level project competition.',
+          'Actively participated in multiple sports events.',
+          'Served as class representative.',
+        ],
+        skills: ['Operating Systems', 'Computer Networks', 'DBMS', 'PHP', 'Java'],
+        expanded: false,
+      },
+    ],
+  },
+  {
+    id: 'scvn',
+    name: 'SCVN Narayandoho',
+    logoUrl: 'https://res.cloudinary.com/dn6xis9je/image/upload/v1790486957/ajmvps-Sanstha-Logo-295x300_r99d62.jpg',
+    current: false,
+    positions: [
+      {
+        id: 'ssc',
+        title: 'Secondary School Student',
+        employmentType: 'Secondary Education',
+        extra: 'SSC Board',
+        start: '2020',
+        end: '2021',
+        description: [
+          'School second topper.',
+          'Participated in several sports events.',
+        ],
+        expanded: false,
+      },
+    ],
+  },
+]
 
 export function Experience({
   id = 'experience',
@@ -229,9 +309,10 @@ export function Experience({
                   company.name
                 )}
               </h3>
-              {company.location && company.locationType && (
+              {company.location && (
                 <span className="exp-location">
-                  {company.location} ({company.locationType})
+                  {company.location}
+                  {company.locationType && ` (${company.locationType})`}
                 </span>
               )}
               {company.current && (

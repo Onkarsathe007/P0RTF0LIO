@@ -27,8 +27,8 @@ const LINKS = [
   },
   {
     title: 'LinkedIn',
-    handle: 'onkar-sathe',
-    href: 'https://linkedin.com/onkar-sathe',
+    handle: 'onkar-sathe007',
+    href: 'https://in.linkedin.com/in/onkar-sathe007',
     icon: (
       <svg viewBox="0 0 24 24" aria-hidden className="social-icon-svg">
         <path
@@ -40,8 +40,8 @@ const LINKS = [
   },
   {
     title: 'YouTube',
-    handle: '@onkarsathe007',
-    href: 'https://www.youtube.com/@onkarsathe007',
+    handle: '@onkarsatheee',
+    href: 'https://www.youtube.com/@onkarsatheee',
     icon: (
       <svg viewBox="0 0 24 24" aria-hidden className="social-icon-svg">
         <path

@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { ThemeToggle } from './components/theme-toggle'
 import { ProfileHeader } from './components/profile-header'
 import { SocialLinks } from './components/social-links'
-import { Experience } from './components/experience'
+import { Experience, EDUCATION } from './components/experience'
 import { SiteFooterLogotype } from './components/site-footer-logotype'
 
 const skills = ['Typescript', 'Java', 'Go', 'AWS', 'Docker', 'Kubernetes', 'Redis', 'Git', 'and etc etc']
@@ -71,7 +71,7 @@ export default function Home() {
                 <a href="https://github.com/onkarsathe007" target="_blank" rel="noopener noreferrer" className="inline-link">
                   Onkar Sathe
                 </a>{' '}
-                incoming SDE Intern at{' '}
+                SDE Intern at{' '}
                 <a href="https://www.wolterskluwer.com/" target="_blank" rel="noopener noreferrer" className="inline-link">
                   Wolters Kluwer
                 </a>
@@ -103,7 +103,7 @@ export default function Home() {
             </div>
           </section>
 
-          <Experience id="education" label="education" />
+          <Experience id="education" label="education" companies={EDUCATION} />
 
           <footer className="home-footer">
             <div className="home-footer-links">

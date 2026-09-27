@@ -117,7 +117,7 @@ export function ContactPanel() {
               <BriefcaseGlyph />
             </TileIcon>
             <p className="contact-text">
-              Incoming SDE Intern <span aria-label="at">@</span>{' '}
+              SDE Intern <span aria-label="at">@</span>{' '}
               <a href="https://www.wolterskluwer.com/" target="_blank" rel="noopener noreferrer" className="inline-link">
                 Wolters Kluwer
               </a>
