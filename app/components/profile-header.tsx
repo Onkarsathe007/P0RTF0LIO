@@ -1,7 +1,6 @@
 'use client'
 
 import {
-  Children,
   useEffect,
   useImperativeHandle,
   useRef,
@@ -11,9 +10,9 @@ import type { Ref } from 'react'
 import { AnimatePresence, motion } from 'motion/react'
 
 const FLIP_SENTENCES = [
-  'I build systems that solve real problems.',
-  'Cloud, DevOps, and clean shipping.',
-  'Hackathons are my playground.',
+  'Software Engineer',
+  'Curious child',
+  'building with AI',
 ]
 
 function VerifiedTick(props: React.ComponentProps<'svg'>) {
@@ -77,29 +76,52 @@ function SoundWaves({ waveRef }: { waveRef: Ref<WaveHandle> }) {
 
 function FlipLines({ lines }: { lines: string[] }) {
   const [index, setIndex] = useState(0)
-  const items = Children.toArray(lines)
+  const duration = 0.5
 
   useEffect(() => {
+    if (lines.length === 0) return
     const timer = setInterval(() => {
-      setIndex((prev) => (prev + 1) % items.length)
-    }, 3000)
+      setIndex((prev) => (prev + 1) % lines.length)
+    }, 2000)
     return () => clearInterval(timer)
-  }, [items.length])
+  }, [lines.length])
+
+  if (lines.length === 0) return null
 
   return (
     <div className="flip-lines" aria-live="polite">
-      <AnimatePresence mode="wait" initial={false}>
-        <motion.p
-          key={index}
-          className="flip-line"
-          initial={{ y: '-20%', opacity: 0, filter: 'blur(1px)' }}
-          animate={{ y: '0%', opacity: 1, filter: 'blur(0px)' }}
-          exit={{ y: '40%', opacity: 0, filter: 'blur(1px)', transition: { ease: 'easeOut' } }}
-          transition={{ duration: 0.3 }}
-        >
-          {items[index]}
-        </motion.p>
-      </AnimatePresence>
+      <div className="flip-grid">
+        {lines.map((text, i) => (
+          <span key={i} className="flip-ghost" aria-hidden="true">
+            {text}
+          </span>
+        ))}
+        <AnimatePresence>
+          <motion.p
+            key={index}
+            className="flip-line"
+            initial="initial"
+            animate="animate"
+            exit="exit"
+          >
+            {lines[index].split('').map((char, i) => {
+              const staggerDelay = (i * duration) / lines[index].length
+              return (
+                <motion.span
+                  key={i}
+                  className="flip-char"
+                  initial={{ filter: 'blur(4px)', opacity: 0 }}
+                  animate={{ filter: 'blur(0px)', opacity: 1 }}
+                  exit={{ filter: 'blur(4px)', opacity: 0 }}
+                  transition={{ duration, delay: staggerDelay }}
+                >
+                  {char === ' ' ? '\u00A0' : char}
+                </motion.span>
+              )
+            })}
+          </motion.p>
+        </AnimatePresence>
+      </div>
     </div>
   )
 }

@@ -595,10 +595,35 @@ body {
   overflow: hidden;
 }
 
+.flip-grid {
+  display: inline-grid;
+}
+
+.flip-ghost {
+  visibility: hidden;
+  grid-column-start: 1;
+  grid-row-start: 1;
+  display: block;
+  white-space: nowrap;
+}
+
+.flip-grid .flip-line {
+  grid-column-start: 1;
+  grid-row-start: 1;
+  display: block;
+  white-space: nowrap;
+}
+
 .flip-line {
-  font-size: 0.95rem;
+  font-family: var(--font-geist-pixel), var(--font-victor-mono), monospace;
+  font-size: 1.45rem;
   line-height: 1.5;
   color: var(--muted);
+}
+
+.flip-char {
+  display: inline-block;
+  white-space: pre;
 }
 
 .sr-only {
@@ -1033,6 +1058,15 @@ body {
 
   .exp-period {
     white-space: nowrap;
+  }
+
+  .exp-sub {
+    padding-left: 1rem;
+    font-size: 0.85rem;
+  }
+
+  .exp-sub li::before {
+    content: "• ";
   }
 }
 

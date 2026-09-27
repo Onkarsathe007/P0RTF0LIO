@@ -194,7 +194,7 @@ export const EDUCATION: Company[] = [
     id: 'viit',
     name: (
       <>
-        VI<sup>2</sup>I
+        VI<sup>2</sup>T
       </>
     ),
     website: 'https://viit.ac.in/',
