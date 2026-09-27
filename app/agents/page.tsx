@@ -31,11 +31,6 @@ export default function ProjectsPage() {
           </header>
 
           <div className="home-intro-sidebar">
-            <img
-              src="https://res.cloudinary.com/dn6xis9je/image/upload/v1780646159/onkar_v40zai.jpg"
-              alt="Onkar Sathe"
-              className="home-profile-img"
-            />
             <h1 className="home-title">Projects</h1>
             <p className="home-lead">I build things, break them, and watch them come alive - this process is what I love..</p>
 

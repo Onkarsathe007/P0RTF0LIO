@@ -56,7 +56,7 @@ export default function Home() {
             </div> */}
             <SocialLinks />
             <ProfileHeader />
-            <p className="home-lead">hehe :)</p>
+            <p className="home-lead">    </p>
           </div>
         </aside>
 
