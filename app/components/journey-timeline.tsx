@@ -10,6 +10,7 @@ const PAD_TOP = 84
 const PAD_BOTTOM = 96
 
 const RIGHT_LABEL_MONTHS = new Set([monthIndex('2024-09'), monthIndex('2026-07')])
+const EXTRA_GAP_AFTER = new Map([[monthIndex('2024-09'), 90]])
 
 function evStyle(color: string): CSSProperties {
   return { '--ev': color } as CSSProperties
@@ -36,10 +37,22 @@ function EventLink({ label, href }: { label: string; href: string }) {
   )
 }
 
-function Tooltip({ text }: { text: string }) {
+function EventCard({ item, dateLabel, open }: { item: TimelineItem; dateLabel: string; open: boolean }) {
+  if (!item.detail) return null
+  const glyph = (item.title.match(/[A-Za-z0-9]/) ?? ['•'])[0].toUpperCase()
   return (
-    <div className="j-tip" role="tooltip">
-      {text}
+    <div className={`j-tip j-card${open ? ' j-tip-open' : ''}`} role="dialog">
+      <div className="j-cover" aria-hidden>
+        {item.image ? (
+          <img src={item.image} alt="" className="j-cover-img" />
+        ) : (
+          <span className="j-cover-letter">{glyph}</span>
+        )}
+      </div>
+      <div className="j-card-body">
+        <div className="j-card-date">{dateLabel}</div>
+        <p className="j-card-text">{item.detail}</p>
+      </div>
     </div>
   )
 }
@@ -51,6 +64,8 @@ function MilestoneNode({
   axisX,
   containerW,
   dashLen,
+  open,
+  onToggle,
 }: {
   item: Extract<TimelineItem, { kind: 'milestone' }>
   index: number
@@ -58,6 +73,8 @@ function MilestoneNode({
   axisX: number
   containerW: number
   dashLen: number
+  open: boolean
+  onToggle: () => void
 }) {
   const mobile = containerW < 640
   const side = mobile ? 'right' : (item.side ?? 'right')
@@ -87,10 +104,10 @@ function MilestoneNode({
       />
       <div className="j-text" style={{ top: 0, ...textStyle }}>
         <div className={`j-title-wrap ${side === 'left' ? 'j-align-right' : ''}`}>
-          <span className="j-title" tabIndex={item.detail ? 0 : undefined}>
+          <button type="button" className="j-title j-title-btn" onClick={onToggle} aria-expanded={open} aria-haspopup="dialog">
             {item.title}
-          </span>
-          {item.detail && <Tooltip text={item.detail} />}
+          </button>
+          <EventCard item={item} dateLabel={formatMonthIdx(monthIndex(item.date))} open={open} />
         </div>
         <div className="j-desc">{item.description}</div>
         {item.link && (
@@ -110,6 +127,8 @@ function RangeNode({
   axisX,
   laneX,
   containerW,
+  open,
+  onToggle,
 }: {
   item: Extract<TimelineItem, { kind: 'range' }>
   startY: number
@@ -117,6 +136,8 @@ function RangeNode({
   axisX: number
   laneX: number
   containerW: number
+  open: boolean
+  onToggle: () => void
 }) {
   const side = item.side
   const midY = (startY + endY) / 2
@@ -133,10 +154,14 @@ function RangeNode({
       <span className="j-hollow" style={{ left: axisX, top: endY }} aria-hidden />
       <div className="j-text" style={{ top: midY, ...textStyle }}>
         <div className={`j-title-wrap ${side === 'left' ? 'j-align-right' : ''}`}>
-          <span className="j-title" tabIndex={item.detail ? 0 : undefined}>
+          <button type="button" className="j-title j-title-btn" onClick={onToggle} aria-expanded={open} aria-haspopup="dialog">
             {item.title}
-          </span>
-          {item.detail && <Tooltip text={item.detail} />}
+          </button>
+          <EventCard
+            item={item}
+            dateLabel={`${formatMonthIdx(monthIndex(item.start))} → ${formatMonthIdx(monthIndex(item.end))}`}
+            open={open}
+          />
         </div>
         <div className="j-desc">{item.org}</div>
         {item.meta && <div className="j-meta">{item.meta}</div>}
@@ -155,6 +180,20 @@ export function JourneyTimeline() {
   const laneRefs = useRef<(SVGPathElement | null)[]>([])
   const [containerW, setContainerW] = useState(700)
   const [drawnLanes, setDrawnLanes] = useState<Set<number>>(new Set())
+  const [openIdx, setOpenIdx] = useState<number | null>(null)
+  const toggleCard = (i: number) => {
+    if (typeof window !== 'undefined' && window.matchMedia('(hover: hover)').matches) return
+    setOpenIdx((prev) => (prev === i ? null : i))
+  }
+
+  useEffect(() => {
+    if (openIdx === null) return
+    const onDown = (e: PointerEvent) => {
+      if (!(e.target as HTMLElement).closest?.('.j-title-wrap')) setOpenIdx(null)
+    }
+    document.addEventListener('pointerdown', onDown)
+    return () => document.removeEventListener('pointerdown', onDown)
+  }, [openIdx])
 
   useEffect(() => {
     const el = containerRef.current
@@ -213,7 +252,10 @@ export function JourneyTimeline() {
     const offset = new Map<number, number>()
     let acc = 0
     sorted.forEach((m, i) => {
-      if (i > 0) acc += Math.min((m - sorted[i - 1]) * PX_PER_MONTH, MAX_GAP_PX)
+      if (i > 0) {
+        acc += Math.min((m - sorted[i - 1]) * PX_PER_MONTH, MAX_GAP_PX)
+        acc += EXTRA_GAP_AFTER.get(sorted[i - 1]) ?? 0
+      }
       offset.set(m, acc)
     })
     const span = acc
@@ -277,6 +319,8 @@ export function JourneyTimeline() {
                   axisX={axisX}
                   containerW={containerW}
                   dashLen={dashLen}
+                  open={openIdx === i}
+                  onToggle={() => toggleCard(i)}
                 />
               )
             }
@@ -292,6 +336,8 @@ export function JourneyTimeline() {
                 axisX={axisX}
                 laneX={laneX}
                 containerW={containerW}
+                open={openIdx === i}
+                onToggle={() => toggleCard(i)}
               />
             )
           })}

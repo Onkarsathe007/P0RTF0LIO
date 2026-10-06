@@ -23,9 +23,6 @@ export default function ProjectsPage() {
               <Link href="/writeups" className="home-nav-link">
                 blogs
               </Link>
-              <Link href="/contact" className="home-nav-link">
-                contact
-              </Link>
               <Link href="/journey" className="home-nav-link">
                 journey
               </Link>

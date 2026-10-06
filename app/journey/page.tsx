@@ -26,9 +26,6 @@ export default function JourneyPage() {
             <Link href="/writeups" className="home-nav-link">
               blogs
             </Link>
-            <Link href="/contact" className="home-nav-link">
-              contact
-            </Link>
             <Link href="/journey" className="home-nav-link home-nav-link-active">
               journey
             </Link>

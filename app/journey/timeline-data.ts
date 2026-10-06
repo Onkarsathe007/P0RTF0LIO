@@ -11,6 +11,7 @@ export type TimelineItem =
       halo?: boolean
       link?: { label: string; href: string }
       detail?: string
+      image?: string
     }
   | {
       kind: 'range'
@@ -23,6 +24,7 @@ export type TimelineItem =
       side: Side
       link?: { label: string; href: string }
       detail?: string
+      image?: string
     }
 
 const MONTH_NAMES = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
@@ -49,6 +51,9 @@ export const TIMELINE_ITEMS: TimelineItem[] = [
     link: { label: 'getfocus.fun', href: 'https://getfocus.fun' },
     color: '#3aa7e0',
     side: 'right',
+    image: 'https://res.cloudinary.com/dn6xis9je/image/upload/v1780645707/cld-sample-2.jpg',
+    detail:
+      'A quiet productivity app — waitlist first, noise never. Designed calm, built to respect attention, shipped solo end to end.',
   },
   {
     kind: 'range',
@@ -58,6 +63,8 @@ export const TIMELINE_ITEMS: TimelineItem[] = [
     org: 'HaloSafe',
     color: '#14b8a6',
     side: 'left',
+    detail:
+      'Founding engineer — zero-to-one ownership across product and infrastructure, shipping fast with a tiny team where every commit counts.',
   },
   {
     kind: 'range',
@@ -69,6 +76,8 @@ export const TIMELINE_ITEMS: TimelineItem[] = [
     color: '#f97316',
     side: 'right',
     link: { label: 'karavalimangalorestore.com', href: 'https://karavalimangalorestore.com' },
+    detail:
+      'Freelance design and development for Karavali Mangalore Store — storefront experience, branding details, and a web presence that feels local.',
   },
   {
     kind: 'milestone',
@@ -79,6 +88,8 @@ export const TIMELINE_ITEMS: TimelineItem[] = [
     color: '#ec4899',
     side: 'right',
     halo: true,
+    detail:
+      'An open-source utility toolkit — small, sharp tools that each do one thing well. Built in the open, free for everyone.',
   },
   {
     kind: 'range',
@@ -89,6 +100,8 @@ export const TIMELINE_ITEMS: TimelineItem[] = [
     meta: 'Barasat · Hybrid',
     color: '#10b981',
     side: 'left',
+    detail:
+      'R&D intern at the Indian Council of Medical Research — where research rigour met real-world engineering and every result mattered.',
   },
   {
     kind: 'milestone',
@@ -99,6 +112,8 @@ export const TIMELINE_ITEMS: TimelineItem[] = [
     color: '#f5a623',
     side: 'right',
     halo: true,
+    detail:
+      'First hackathon win — 1st place at the IndiaAI Hackathon. Proof that pressure, caffeine, and a good team produce gold.',
   },
   {
     kind: 'range',
@@ -121,6 +136,8 @@ export const TIMELINE_ITEMS: TimelineItem[] = [
     meta: 'Kolkata · On-site',
     color: '#f59e0b',
     side: 'left',
+    detail:
+      'Cloud architect — designing and deploying workloads on AWS, learning how the internet actually stays up, on-site in Kolkata.',
   },
   {
     kind: 'milestone',
@@ -130,6 +147,8 @@ export const TIMELINE_ITEMS: TimelineItem[] = [
     link: { label: 'AthenaFOSS', href: 'https://github.com/AthenaFOSS' },
     color: '#8b5cf6',
     side: 'left',
+    detail:
+      'Where everything changed — the open-source community that turned curiosity into craft and strangers into collaborators.',
   },
   {
     kind: 'milestone',
@@ -139,5 +158,7 @@ export const TIMELINE_ITEMS: TimelineItem[] = [
     color: '#ef4444',
     side: 'right',
     halo: true,
+    detail:
+      'The career-changing point — leaving the old path for computer science. The scariest and best decision on this whole timeline.',
   },
 ]

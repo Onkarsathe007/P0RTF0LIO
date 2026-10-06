@@ -26,6 +26,10 @@
   --surface-elevated: #111113;
 }
 
+html {
+  scrollbar-gutter: stable;
+}
+
 html,
 body {
   min-height: 100%;
@@ -1618,7 +1622,7 @@ a {
   width: 100%;
   max-width: 1400px;
   margin: 0 auto;
-  padding: 2.5rem 4rem;
+  padding: calc(5vh + 2.5rem) 4rem 2.5rem;
   display: flex;
   flex-direction: column;
   gap: 3rem;
@@ -1731,6 +1735,7 @@ a {
   background: transparent;
   color: var(--j-label);
   font-size: 12px;
+  font-weight: 600;
   line-height: 1.4;
   white-space: nowrap;
   z-index: 2;
@@ -1746,6 +1751,11 @@ a {
   width: 0;
   height: 0;
   z-index: 3;
+}
+
+.j-node:has(.j-title-wrap:hover),
+.j-node:has(.j-tip-open) {
+  z-index: 30;
 }
 
 .j-halo {
@@ -1868,7 +1878,7 @@ a {
 
 .j-title {
   font-size: 17px;
-  font-weight: 700;
+  font-weight: 800;
   line-height: 1.35;
   color: var(--ev);
 }
@@ -1877,15 +1887,32 @@ a {
   color: color-mix(in srgb, var(--ev) 72%, black);
 }
 
-.j-title[tabindex]:hover {
+.j-title-btn {
+  appearance: none;
+  background: transparent;
+  border: none;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+  text-align: inherit;
+  cursor: pointer;
+}
+
+.j-title-btn:hover {
   text-decoration: underline;
   text-decoration-style: dotted;
   text-underline-offset: 3px;
-  cursor: help;
+}
+
+.j-title-btn:focus-visible {
+  outline: 2px solid var(--ev);
+  outline-offset: 3px;
+  border-radius: 4px;
 }
 
 .j-desc {
   font-size: 14px;
+  font-weight: 500;
   line-height: 1.5;
   color: var(--j-desc);
   margin-top: 2px;
@@ -1893,6 +1920,7 @@ a {
 
 .j-meta {
   font-size: 12px;
+  font-weight: 500;
   color: var(--j-meta);
   margin-top: 2px;
 }
@@ -1903,6 +1931,7 @@ a {
 
 .j-link {
   font-size: 12px;
+  font-weight: 600;
   color: var(--j-label);
   text-decoration: none;
 }
@@ -1917,35 +1946,130 @@ a {
   position: absolute;
   top: 100%;
   left: 0;
-  margin-top: 8px;
-  width: 330px;
+  margin-top: 12px;
+  width: 340px;
   max-width: 70vw;
+  padding: 0;
+  overflow: hidden;
   background: var(--j-tip-bg);
-  border: 1px solid var(--j-tip-bd);
-  border-radius: 8px;
-  padding: 12px 14px;
-  font-size: 13px;
-  font-weight: 400;
-  line-height: 1.6;
-  color: var(--j-tip-tx);
+  border: 1px solid color-mix(in srgb, var(--ev) 38%, var(--j-tip-bd));
+  border-radius: 12px;
   text-align: left;
   opacity: 0;
-  transform: translateY(4px);
+  transform: translateY(8px) scale(0.98);
+  transform-origin: top left;
   pointer-events: none;
-  transition: opacity 150ms ease, transform 150ms ease;
+  transition:
+    opacity 180ms ease,
+    transform 180ms cubic-bezier(0.2, 0.9, 0.3, 1.15);
   z-index: 30;
+}
+
+.j-tip::before {
+  content: "";
+  position: absolute;
+  top: -5px;
+  left: 26px;
+  width: 10px;
+  height: 10px;
+  background: var(--j-tip-bg);
+  border-left: 1px solid color-mix(in srgb, var(--ev) 38%, var(--j-tip-bd));
+  border-top: 1px solid color-mix(in srgb, var(--ev) 38%, var(--j-tip-bd));
+  transform: rotate(45deg);
+  z-index: 1;
 }
 
 .j-align-right .j-tip {
   left: auto;
   right: 0;
+  transform-origin: top right;
+}
+
+.j-align-right .j-tip::before {
+  left: auto;
+  right: 26px;
 }
 
 .j-title-wrap:hover .j-tip,
-.j-title-wrap:focus-within .j-tip {
+.j-title-wrap:focus-within .j-tip,
+.j-tip.j-tip-open {
   opacity: 1;
-  transform: translateY(0);
+  transform: translateY(0) scale(1);
   pointer-events: auto;
+}
+
+.j-cover {
+  position: relative;
+  height: 104px;
+  overflow: hidden;
+  background:
+    radial-gradient(120% 130% at 15% 10%, color-mix(in srgb, var(--ev) 55%, transparent) 0%, transparent 55%),
+    radial-gradient(100% 120% at 90% 100%, color-mix(in srgb, var(--ev) 30%, transparent) 0%, transparent 60%),
+    linear-gradient(160deg, color-mix(in srgb, var(--ev) 22%, #0a0a0a) 0%, #0a0a0a 70%);
+}
+
+[data-theme='light'] .j-cover {
+  background:
+    radial-gradient(120% 130% at 15% 10%, color-mix(in srgb, var(--ev) 38%, transparent) 0%, transparent 55%),
+    radial-gradient(100% 120% at 90% 100%, color-mix(in srgb, var(--ev) 22%, transparent) 0%, transparent 60%),
+    linear-gradient(160deg, color-mix(in srgb, var(--ev) 16%, #ffffff) 0%, #ffffff 75%);
+}
+
+.j-cover::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.07) 0 1px, transparent 1px 14px),
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.07) 0 1px, transparent 1px 14px);
+  mask-image: radial-gradient(85% 110% at 50% 0%, black 25%, transparent 100%);
+  -webkit-mask-image: radial-gradient(85% 110% at 50% 0%, black 25%, transparent 100%);
+}
+
+[data-theme='light'] .j-cover::after {
+  background:
+    repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.06) 0 1px, transparent 1px 14px),
+    repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.06) 0 1px, transparent 1px 14px);
+}
+
+.j-cover-letter {
+  position: absolute;
+  right: 8px;
+  bottom: -32px;
+  font-size: 100px;
+  font-weight: 700;
+  line-height: 1;
+  color: transparent;
+  -webkit-text-stroke: 1.5px color-mix(in srgb, var(--ev) 60%, transparent);
+  user-select: none;
+}
+
+.j-cover-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.j-card-body {
+  padding: 12px 14px 14px;
+}
+
+.j-card-date {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--ev) 80%, var(--j-tip-tx));
+  margin-bottom: 6px;
+}
+
+.j-card-text {
+  margin: 0;
+  font-size: 12.5px;
+  font-weight: 500;
+  line-height: 1.65;
+  color: var(--j-tip-tx);
 }
 
 @media (max-width: 640px) {

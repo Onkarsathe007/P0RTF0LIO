@@ -3,6 +3,7 @@ import { ThemeToggle } from './components/theme-toggle'
 import { ProfileHeader } from './components/profile-header'
 import { SocialLinks } from './components/social-links'
 import { Experience, EDUCATION } from './components/experience'
+import { ContactPanel } from './components/contact-panel'
 import { SiteFooterLogotype } from './components/site-footer-logotype'
 
 const skills = ['Typescript', 'Java', 'Go', 'AWS', 'Docker', 'Kubernetes', 'Redis', 'Git', 'and etc etc']
@@ -22,9 +23,6 @@ export default function Home() {
               </Link>
               <Link href="/writeups" className="home-nav-link">
                 blogs
-              </Link>
-              <Link href="/contact" className="home-nav-link">
-                contact
               </Link>
               <Link href="/journey" className="home-nav-link">
                 journey
@@ -108,16 +106,7 @@ export default function Home() {
 
           <Experience id="education" label="education" companies={EDUCATION} />
 
-          <footer className="home-footer">
-            <div className="home-footer-links">
-              <a href="mailto:onkarsathe96k@gmail.com" className="inline-link">
-                email
-              </a>
-              <a href="https://github.com/Onkarsathe007" target="_blank" rel="noopener noreferrer" className="inline-link">
-                github
-              </a>
-            </div>
-          </footer>
+          <ContactPanel />
 
           <div className="stripe-band" aria-hidden />
 

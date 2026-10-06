@@ -25,9 +25,6 @@ export default async function WriteupsPage() {
               <Link href="/writeups" className="home-nav-link home-nav-link-active">
                 blogs
               </Link>
-              <Link href="/contact" className="home-nav-link">
-                contact
-              </Link>
               <Link href="/journey" className="home-nav-link">
                 journey
               </Link>
