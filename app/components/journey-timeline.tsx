@@ -152,7 +152,9 @@ function RangeNode({
 
 export function JourneyTimeline() {
   const containerRef = useRef<HTMLDivElement>(null)
+  const laneRefs = useRef<(SVGPathElement | null)[]>([])
   const [containerW, setContainerW] = useState(700)
+  const [drawnLanes, setDrawnLanes] = useState<Set<number>>(new Set())
 
   useEffect(() => {
     const el = containerRef.current
@@ -161,6 +163,36 @@ export function JourneyTimeline() {
     const ro = new ResizeObserver(() => setContainerW(el.clientWidth))
     ro.observe(el)
     return () => ro.disconnect()
+  }, [])
+
+  useEffect(() => {
+    const els = laneRefs.current.filter((el): el is SVGPathElement => el !== null)
+    if (typeof IntersectionObserver === 'undefined' || els.length === 0) {
+      setDrawnLanes(new Set(laneRefs.current.map((_, i) => i)))
+      return
+    }
+    const io = new IntersectionObserver(
+      (entries) => {
+        setDrawnLanes((prev) => {
+          const next = new Set(prev)
+          let changed = false
+          for (const entry of entries) {
+            if (entry.isIntersecting) {
+              const idx = Number((entry.target as SVGPathElement).dataset.lane)
+              if (!next.has(idx)) {
+                next.add(idx)
+                changed = true
+              }
+              io.unobserve(entry.target)
+            }
+          }
+          return changed ? next : prev
+        })
+      },
+      { threshold: 0.2 }
+    )
+    els.forEach((el) => io.observe(el))
+    return () => io.disconnect()
   }, [])
 
   const isMobile = containerW < 640
@@ -211,8 +243,12 @@ export function JourneyTimeline() {
               return (
                 <path
                   key={`lane-${i}`}
-                  className="j-lane"
-                  style={{ '--ev': item.color, animationDelay: `${0.4 + i * 0.18}s` } as CSSProperties}
+                  ref={(el) => {
+                    laneRefs.current[i] = el
+                  }}
+                  data-lane={i}
+                  className={`j-lane${drawnLanes.has(i) ? ' j-drawn' : ''}`}
+                  style={{ '--ev': item.color } as CSSProperties}
                   d={rangePath(axisX, laneX, startY, endY)}
                   pathLength={100}
                 />

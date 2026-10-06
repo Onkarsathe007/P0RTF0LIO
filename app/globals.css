@@ -1708,6 +1708,9 @@ a {
   stroke-linecap: round;
   stroke-dasharray: 100;
   stroke-dashoffset: 100;
+}
+
+.j-lane.j-drawn {
   animation: j-draw 1.3s ease-out forwards;
 }
 
