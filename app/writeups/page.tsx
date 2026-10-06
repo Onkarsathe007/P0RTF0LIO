@@ -28,6 +28,9 @@ export default async function WriteupsPage() {
               <Link href="/contact" className="home-nav-link">
                 contact
               </Link>
+              <Link href="/journey" className="home-nav-link">
+                journey
+              </Link>
             </div>
             <ThemeToggle />
           </header>

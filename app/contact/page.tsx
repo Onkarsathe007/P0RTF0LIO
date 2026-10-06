@@ -26,6 +26,9 @@ export default function ContactPage() {
               <Link href="/contact" className="home-nav-link home-nav-link-active">
                 contact
               </Link>
+              <Link href="/journey" className="home-nav-link">
+                journey
+              </Link>
             </div>
             <ThemeToggle />
           </header>
