@@ -212,8 +212,9 @@ export function JourneyTimeline() {
                 <path
                   key={`lane-${i}`}
                   className="j-lane"
-                  style={{ '--ev': item.color } as CSSProperties}
+                  style={{ '--ev': item.color, animationDelay: `${0.4 + i * 0.18}s` } as CSSProperties}
                   d={rangePath(axisX, laneX, startY, endY)}
+                  pathLength={100}
                 />
               )
             })}
