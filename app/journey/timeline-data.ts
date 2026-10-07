@@ -142,23 +142,74 @@ export const TIMELINE_ITEMS: TimelineItem[] = [
   {
     kind: 'milestone',
     date: '2024-09',
-    title: 'Joined Athena FOSS',
-    description: 'Where everything changed.',
-    link: { label: 'AthenaFOSS', href: 'https://github.com/AthenaFOSS' },
-    color: '#8b5cf6',
+    title: 'Intern at ProAzure Solutions',
+    description: '2-month internship',
+    color: '#ffffff',
     side: 'left',
     detail:
-      'Where everything changed — the open-source community that turned curiosity into craft and strangers into collaborators.',
+      'A 2-month internship at ProAzure Solutions — real tickets, real deadlines, and the first taste of professional software work.',
   },
   {
     kind: 'milestone',
-    date: '2023-08',
-    title: 'Switched to CS',
+    date: '2021-07',
+    title: 'Enrolled in Polytechnic',
     description: 'Career changing point',
-    color: '#ef4444',
+    color: '#a855f7',
     side: 'right',
     halo: true,
     detail:
-      'The career-changing point — leaving the old path for computer science. The scariest and best decision on this whole timeline.',
+      'The starting point — enrolling in polytechnic, the first step toward a career in technology. No looking back.',
+  },
+  {
+    kind: 'range',
+    start: '2021-07',
+    end: '2024-07',
+    title: 'Diploma',
+    org: 'Polytechnic',
+    color: '#a855f7',
+    side: 'left',
+    detail:
+      'Three years of polytechnic — engineering foundations, labs, and the discipline that everything above this line is built on.',
+  },
+  {
+    kind: 'milestone',
+    date: '2024-05',
+    title: 'Graduated as College Topper',
+    description: 'First rank, three consecutive years',
+    color: '#fb9234',
+    side: 'right',
+    detail:
+      'Graduated as the college topper — first rank in all three years of polytechnic. Consistency compounded.',
+  },
+  {
+    kind: 'milestone',
+    date: '2024-01',
+    title: 'Avishkar Winner',
+    description: 'State-level project competition',
+    color: '#f5a623',
+    side: 'right',
+    detail:
+      'Winner at Avishkar, the state-level project competition — up against the best student projects at the state level and coming out on top.',
+  },
+  {
+    kind: 'range',
+    start: '2023-09',
+    end: '2023-11',
+    title: 'Intern',
+    org: 'ProAzure Solutions',
+    color: '#22c55e',
+    side: 'right',
+    detail:
+      'A 2-month internship at ProAzure Solutions during the diploma years — an early taste of professional software work while still in polytechnic.',
+  },
+  {
+    kind: 'milestone',
+    date: '2021-05',
+    title: 'SSC',
+    description: 'Finished school as second topper',
+    color: '#fb9234',
+    side: 'right',
+    detail:
+      'Passed SSC as the second topper of the school — the result that earned the polytechnic seat and kicked off everything above this dot.',
   },
 ]
