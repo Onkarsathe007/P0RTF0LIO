@@ -11,6 +11,16 @@ const PAD_BOTTOM = 96
 
 const RIGHT_LABEL_MONTHS = new Set<number>()
 const EXTRA_GAP_AFTER = new Map([[monthIndex('2024-09'), 90]])
+const MOBILE_EXTRA_GAP_AFTER = new Map([
+  [monthIndex('2021-05'), 50],
+  [monthIndex('2023-11'), 40],
+  [monthIndex('2024-01'), 70],
+  [monthIndex('2025-03'), 50],
+  [monthIndex('2025-05'), 50],
+  [monthIndex('2025-09'), 40],
+  [monthIndex('2026-08'), 80],
+  [monthIndex('2026-09'), 70],
+])
 
 function resolveMonth(date: string): number {
   if (date.trim().toLowerCase() === 'present') {
@@ -157,7 +167,7 @@ function RangeNode({
   const anchorY = item.textAt === 'end' ? endY : midY
   const isLive = item.end.trim().toLowerCase() === 'present'
   const rawW = side === 'right' ? containerW - laneX - 22 : laneX - 22
-  const w = Math.max(Math.min(rawW, 300), 96)
+  const w = Math.max(Math.min(rawW, 300), containerW < 640 ? 40 : 96)
   const textStyle: CSSProperties =
     side === 'right'
       ? { left: laneX + 14, width: w, textAlign: 'left' as const }
@@ -253,7 +263,7 @@ export function JourneyTimeline() {
   }, [])
 
   const isMobile = containerW < 640
-  const laneOffset = (side: Side) => (isMobile ? (side === 'left' ? 60 : 30) : side === 'left' ? 100 : 60)
+  const laneOffset = (side: Side) => (isMobile ? (side === 'left' ? 72 : 30) : side === 'left' ? 100 : 60)
   const dashLen = isMobile ? 32 : 50
   const axisX = containerW / 2
 
@@ -279,6 +289,7 @@ export function JourneyTimeline() {
       if (i > 0) {
         acc += Math.min((m - sorted[i - 1]) * PX_PER_MONTH, MAX_GAP_PX)
         acc += EXTRA_GAP_AFTER.get(sorted[i - 1]) ?? 0
+        if (isMobile) acc += MOBILE_EXTRA_GAP_AFTER.get(sorted[i - 1]) ?? 0
       }
       offset.set(m, acc)
     })
@@ -286,7 +297,7 @@ export function JourneyTimeline() {
     const height = span + PAD_TOP + PAD_BOTTOM
     const yOf = (m: number) => PAD_TOP + (span - (offset.get(m) ?? 0))
     return { sorted, yOf, height, labelOverrides }
-  }, [])
+  }, [isMobile])
 
   return (
     <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
