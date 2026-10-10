@@ -16,12 +16,13 @@ export type TimelineItem =
   | {
       kind: 'range'
       start: string // "YYYY-MM"
-      end: string // "YYYY-MM"
+      end: string // "YYYY-MM" or "present"
       title: string
       org: string
       meta?: string
       color: string
       side: Side
+      lane?: number
       link?: { label: string; href: string }
       detail?: string
       image?: string
@@ -44,110 +45,70 @@ export function formatMonthIdx(idx: number): string {
 
 export const TIMELINE_ITEMS: TimelineItem[] = [
   {
-    kind: 'milestone',
-    date: '2026-08',
-    title: 'Focus waitlist & launch',
-    description: 'Quiet productivity app',
-    link: { label: 'getfocus.fun', href: 'https://getfocus.fun' },
-    color: '#3aa7e0',
-    side: 'right',
-    image: 'https://res.cloudinary.com/dn6xis9je/image/upload/v1780645707/cld-sample-2.jpg',
-    detail:
-      'A quiet productivity app — waitlist first, noise never. Designed calm, built to respect attention, shipped solo end to end.',
-  },
-  {
     kind: 'range',
-    start: '2026-01',
-    end: '2026-07',
-    title: 'Founding Engineer',
-    org: 'HaloSafe',
-    color: '#14b8a6',
-    side: 'left',
-    detail:
-      'Founding engineer — zero-to-one ownership across product and infrastructure, shipping fast with a tiny team where every commit counts.',
-  },
-  {
-    kind: 'range',
-    start: '2026-03',
-    end: '2026-05',
-    title: 'design & development',
-    org: 'Karavali Mangalore Store',
-    meta: 'Freelance',
-    color: '#f97316',
-    side: 'right',
-    link: { label: 'karavalimangalorestore.com', href: 'https://karavalimangalorestore.com' },
-    detail:
-      'Freelance design and development for Karavali Mangalore Store — storefront experience, branding details, and a web presence that feels local.',
-  },
-  {
-    kind: 'milestone',
-    date: '2026-01',
-    title: 'Launched astraa.tech',
-    description: 'Open-source utility toolkit',
-    link: { label: 'astraa.tech', href: 'https://astraa.tech' },
-    color: '#ec4899',
-    side: 'right',
-    halo: true,
-    detail:
-      'An open-source utility toolkit — small, sharp tools that each do one thing well. Built in the open, free for everyone.',
-  },
-  {
-    kind: 'range',
-    start: '2025-06',
-    end: '2025-12',
-    title: 'Research And Development Intern',
-    org: 'Indian Council of Medical Research (ICMR)',
-    meta: 'Barasat · Hybrid',
-    color: '#10b981',
-    side: 'left',
-    detail:
-      'R&D intern at the Indian Council of Medical Research — where research rigour met real-world engineering and every result mattered.',
-  },
-  {
-    kind: 'milestone',
-    date: '2025-10',
-    title: '1st Place, IndiaAI Hackathon',
-    description: 'First hackathon win',
-    link: { label: 'results', href: 'https://indiaai.gov.in' },
-    color: '#f5a623',
-    side: 'right',
-    halo: true,
-    detail:
-      'First hackathon win — 1st place at the IndiaAI Hackathon. Proof that pressure, caffeine, and a good team produce gold.',
-  },
-  {
-    kind: 'range',
-    start: '2025-05',
-    end: '2025-09',
-    title: 'Software Engineer Intern',
-    org: 'FarAlpha Technologies',
-    meta: 'Kolkata · Remote',
-    color: '#6366f1',
-    side: 'right',
-    detail:
-      'Worked on file upload optimization and video processing with AWS Step Functions, built RAG systems with LangChain and Redis caching, and set up monitoring with Sentry, CloudWatch, and RUM.',
-  },
-  {
-    kind: 'range',
-    start: '2024-11',
-    end: '2025-02',
-    title: 'Cloud Architect',
-    org: 'WebGuru Infosystems Pvt. Ltd.',
-    meta: 'Kolkata · On-site',
+    start: '2024-09',
+    end: '2027-09',
+    title: 'B.Tech',
+    org: 'VIIT Pune',
+    meta: 'AI and Data Science · Pune, India',
     color: '#f59e0b',
     side: 'left',
     detail:
-      'Cloud architect — designing and deploying workloads on AWS, learning how the internet actually stays up, on-site in Kolkata.',
+      'Pursuing a B.Tech in AI and Data Science at VIIT Pune, Pune, India — where the diploma foundations meet degree-level depth.',
+  },
+  {
+    kind: 'range',
+    start: '2026-07',
+    end: 'present',
+    title: 'SDE Intern',
+    org: 'Wolters Kluwer',
+    color: '#0078C0',
+    side: 'right',
+    textAt: 'end',
+    detail:
+      'SDE Intern at Wolters Kluwer — building production software alongside experienced engineers.',
   },
   {
     kind: 'milestone',
-    date: '2024-09',
-    title: 'Intern at ProAzure Solutions',
-    description: '2-month internship',
-    color: '#ffffff',
-    side: 'left',
+    date: '2026-09',
+    title: 'Kurukshetra Hackathon',
+    description: 'Winner · MIT Pune',
+    color: '#6366f1',
+    side: 'right',
     detail:
-      'A 2-month internship at ProAzure Solutions — real tickets, real deadlines, and the first taste of professional software work.',
+      'Winner at Kurukshetra, the international hackathon at MIT Pune — first place on an international stage.',
+  },
+  {
+    kind: 'range',
+    start: '2025-10',
+    end: '2025-12',
+    title: 'Full Stack Developer',
+    org: 'Sitocrats Pvt Ltd',
+    color: '#a3e635',
+    side: 'right',
+    textAt: 'end',
+    detail:
+      'Full Stack Developer intern at Sitocrats Pvt Ltd — shipping features across frontend and backend.',
+  },
+  {
+    kind: 'milestone',
+    date: '2025-09',
+    title: 'Infineon VIT Internal Hackathon',
+    description: 'Winner',
+    color: '#ec4899',
+    side: 'right',
+    detail:
+      'Winner of the Infineon VIT Internal Hackathon — first place against strong competition from across the campus.',
+  },
+  {
+    kind: 'milestone',
+    date: '2026-08',
+    title: 'Samarthya Hackathon',
+    description: 'Runner-up · SKN COE, Pune',
+    color: '#14b8a6',
+    side: 'right',
+    detail:
+      'Runner-up at Samarthya, a state-level project competition at SKN COE Pune — missing the top spot by a whisker against the best projects in the state.',
   },
   {
     kind: 'milestone',
@@ -180,6 +141,28 @@ export const TIMELINE_ITEMS: TimelineItem[] = [
     side: 'right',
     detail:
       'Graduated as the college topper — first rank in all three years of polytechnic. Consistency compounded.',
+  },
+  {
+    kind: 'milestone',
+    date: '2025-05',
+    title: 'Inceptia Hackathon',
+    description: 'Winner · VPCOE, Ahilyanagar',
+    color: '#3aa7e0',
+    side: 'right',
+    detail:
+      'Winner at Inceptia, a state-level hackathon hosted at VPCOE Ahilyanagar — first place against the best teams in the state.',
+  },
+  {
+    kind: 'range',
+    start: '2025-01',
+    end: '2025-03',
+    title: 'Backend Developer',
+    org: 'Lienzo',
+    meta: 'E-commerce startup',
+    color: '#ef4444',
+    side: 'right',
+    detail:
+      'Backend developer at Lienzo, an e-commerce platform startup — shipping backend features with a small team where everyone wore many hats.',
   },
   {
     kind: 'milestone',

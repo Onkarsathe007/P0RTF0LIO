@@ -9,8 +9,21 @@ const MAX_GAP_PX = 96
 const PAD_TOP = 84
 const PAD_BOTTOM = 96
 
-const RIGHT_LABEL_MONTHS = new Set([monthIndex('2024-09'), monthIndex('2026-07')])
+const RIGHT_LABEL_MONTHS = new Set<number>()
 const EXTRA_GAP_AFTER = new Map([[monthIndex('2024-09'), 90]])
+
+function resolveMonth(date: string): number {
+  if (date.trim().toLowerCase() === 'present') {
+    const now = new Date()
+    return now.getFullYear() * 12 + now.getMonth()
+  }
+  return monthIndex(date)
+}
+
+function formatDateLabel(date: string): string {
+  if (date.trim().toLowerCase() === 'present') return 'Present'
+  return formatMonthIdx(monthIndex(date))
+}
 
 function evStyle(color: string): CSSProperties {
   return { '--ev': color } as CSSProperties
@@ -141,6 +154,8 @@ function RangeNode({
 }) {
   const side = item.side
   const midY = (startY + endY) / 2
+  const anchorY = item.textAt === 'end' ? endY : midY
+  const isLive = item.end.trim().toLowerCase() === 'present'
   const rawW = side === 'right' ? containerW - laneX - 22 : laneX - 22
   const w = Math.max(Math.min(rawW, 300), 96)
   const textStyle: CSSProperties =
@@ -152,14 +167,17 @@ function RangeNode({
     <div className="j-node" style={{ top: 0, left: 0, ...evStyle(item.color) }}>
       <span className="j-hollow" style={{ left: axisX, top: startY }} aria-hidden />
       <span className="j-hollow" style={{ left: axisX, top: endY }} aria-hidden />
-      <div className="j-text" style={{ top: midY, ...textStyle }}>
+      {isLive && (
+        <span className="j-ping" style={{ left: axisX, top: endY }} aria-hidden />
+      )}
+      <div className="j-text" style={{ top: anchorY, ...textStyle }}>
         <div className={`j-title-wrap ${side === 'left' ? 'j-align-right' : ''}`}>
           <button type="button" className="j-title j-title-btn" onClick={onToggle} aria-expanded={open} aria-haspopup="dialog">
             {item.title}
           </button>
           <EventCard
             item={item}
-            dateLabel={`${formatMonthIdx(monthIndex(item.start))} → ${formatMonthIdx(monthIndex(item.end))}`}
+            dateLabel={`${formatDateLabel(item.start)} → ${formatDateLabel(item.end)}`}
             open={open}
           />
         </div>
@@ -241,11 +259,17 @@ export function JourneyTimeline() {
 
   const layout = useMemo(() => {
     const months = new Set<number>()
+    const labelOverrides = new Map<number, string>()
+    const addMonth = (date: string) => {
+      const m = resolveMonth(date)
+      months.add(m)
+      if (date.trim().toLowerCase() === 'present') labelOverrides.set(m, 'Present')
+    }
     for (const item of TIMELINE_ITEMS) {
-      if (item.kind === 'milestone') months.add(monthIndex(item.date))
+      if (item.kind === 'milestone') addMonth(item.date)
       else {
-        months.add(monthIndex(item.start))
-        months.add(monthIndex(item.end))
+        addMonth(item.start)
+        addMonth(item.end)
       }
     }
     const sorted = [...months].sort((a, b) => a - b)
@@ -261,7 +285,7 @@ export function JourneyTimeline() {
     const span = acc
     const height = span + PAD_TOP + PAD_BOTTOM
     const yOf = (m: number) => PAD_TOP + (span - (offset.get(m) ?? 0))
-    return { sorted, yOf, height }
+    return { sorted, yOf, height, labelOverrides }
   }, [])
 
   return (
@@ -279,9 +303,11 @@ export function JourneyTimeline() {
           >
             {TIMELINE_ITEMS.map((item, i) => {
               if (item.kind !== 'range') return null
-              const startY = layout.yOf(monthIndex(item.start))
-              const endY = layout.yOf(monthIndex(item.end))
-              const laneX = item.side === 'right' ? axisX + laneOffset('right') : axisX - laneOffset('left')
+              const startY = layout.yOf(resolveMonth(item.start))
+              const endY = layout.yOf(resolveMonth(item.end))
+              const laneDef = item.side === 'right' ? laneOffset('right') : laneOffset('left')
+              const laneOff = item.lane != null ? Math.min(item.lane, axisX - 60) : laneDef
+              const laneX = item.side === 'right' ? axisX + laneOff : axisX - laneOff
               return (
                 <path
                   key={`lane-${i}`}
@@ -304,7 +330,7 @@ export function JourneyTimeline() {
               className={`j-month${RIGHT_LABEL_MONTHS.has(m) ? ' j-month-right' : ''}`}
               style={{ left: axisX, top: layout.yOf(m) }}
             >
-              {formatMonthIdx(m)}
+              {layout.labelOverrides.get(m) ?? formatMonthIdx(m)}
             </div>
           ))}
 
@@ -315,7 +341,7 @@ export function JourneyTimeline() {
                   key={`m-${i}`}
                   item={item}
                   index={i}
-                  y={layout.yOf(monthIndex(item.date))}
+                  y={layout.yOf(resolveMonth(item.date))}
                   axisX={axisX}
                   containerW={containerW}
                   dashLen={dashLen}
@@ -324,9 +350,11 @@ export function JourneyTimeline() {
                 />
               )
             }
-            const startY = layout.yOf(monthIndex(item.start))
-            const endY = layout.yOf(monthIndex(item.end))
-            const laneX = item.side === 'right' ? axisX + laneOffset('right') : axisX - laneOffset('left')
+            const startY = layout.yOf(resolveMonth(item.start))
+            const endY = layout.yOf(resolveMonth(item.end))
+            const laneDef = item.side === 'right' ? laneOffset('right') : laneOffset('left')
+            const laneOff = item.lane != null ? Math.min(item.lane, axisX - 60) : laneDef
+            const laneX = item.side === 'right' ? axisX + laneOff : axisX - laneOff
             return (
               <RangeNode
                 key={`r-${i}`}
