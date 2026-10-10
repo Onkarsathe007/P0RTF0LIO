@@ -178,7 +178,7 @@ export const TIMELINE_ITEMS: TimelineItem[] = [
     kind: 'range',
     start: '2023-09',
     end: '2023-11',
-    title: 'Intern',
+    title: 'Trainee',
     org: 'ProAzure Solutions',
     color: '#22c55e',
     side: 'right',
