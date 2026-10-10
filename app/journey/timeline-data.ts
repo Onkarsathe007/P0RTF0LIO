@@ -23,6 +23,7 @@ export type TimelineItem =
       color: string
       side: Side
       lane?: number
+      textAt?: 'mid' | 'end'
       link?: { label: string; href: string }
       detail?: string
       image?: string
